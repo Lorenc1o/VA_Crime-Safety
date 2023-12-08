@@ -1,0 +1,26 @@
+body {
+  font-family: 'Arial', sans-serif; 
+}
+
+.titles {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.responsive-svg-container {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  max-width: 500px; 
+}
+
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0px; /* Adjust the gap as needed */
+  justify-content: center;
+}
