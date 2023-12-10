@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visual Analytics: D3 Assignment</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <h1 style="text-align:center">
+		Crime and Safety: Spain
+	</h1>
+  <div style="color:white; background-color: black;">
+    <h2 style="text-align:center; color: whitesmoke;">National Stadistics</h3>
+    <div class="grid-container">
+      <div id="bar" class="responsive-svg-container">
+        <h3 style="text-align:center; color: whitesmoke;">Crimes per Province</h3>
+      </div>
+      <div id="sunburst-container" class="responsive-svg-container">
+        <h3 style="text-align:center;  color: whitesmoke;">Crimes per Categories and Subcategories</h3>
+      </div>
+    </div>	
+  </div>
+  <img src="drip.png" alt="Drip Image" style="width: 100%; max-width: 100%; ">  
+  <svg width="300" height="400"></svg>
+  <div id="selectors-container">
+      <div class="selector-box" id="category-selector-box">
+          <h3>Crime Categories</h3>
+          <button class="nice-button" id="select-all-categories">Select All</button>
+          <button class="nice-button" id="deselect-all-categories">Deselect All</button>
+          <div id="category-selectors"></div>
+      </div>
+      <div class="selector-box" id="province-selector-box">
+          <h3>Provinces</h3>
+          <button class="nice-button" id="select-all-provinces">Select All</button>
+          <button class="nice-button" id="deselect-all-provinces">Deselect All</button>
+          <div id="province-selectors"></div>
+      </div> 
+  </div>
+<script src="assets/js/scripts.js"></script>
+</body>
+</html>
