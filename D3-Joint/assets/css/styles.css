@@ -65,7 +65,7 @@ label {
     margin-left: auto;
     width: 100%;
     max-width: 500px; 
-    background-color: black;
+    background-color: transparent;
     color: grey;
   }
   
@@ -75,6 +75,43 @@ label {
     grid-template-columns: repeat(2, 1fr);
     gap: -10px; /* Adjust the gap as needed */
     justify-content: center;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1000deg); }
+  }
+  
+  @keyframes funAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  .responsive-svg-container {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .nice-button {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .nice-button.clicked {
+    transform: scale(1.2);
+  }
+  
+  .bar-animation {
+    animation: funAnimation 3s ease-in-out;
+  }
+  
+  .bar {
+    transform-origin: bottom;
+    transform: scaleY(0); /* Set initial scaleY value to 0 for shrinkage */
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .bar.grow {
+    transform: scaleY(1); /* Set scaleY value to 1 for growth */
   }
   
   

@@ -2,6 +2,7 @@
 var width = 1000,
 height = 300;
 const parseTime = d3.timeParse("%Y");
+duration = 3000;
 
 margin = {
     top: height * 0.1,
@@ -19,12 +20,14 @@ var svg = d3.select("svg")
 
 // Append a title to the SVG
 svg.append("text")
-    .attr("x", width / 2) // Position the title in the middle of the SVG
-    .attr("y", -height*0.05) // Position the title 20px from the top of the SVG
+    .attr("x", width/3) // Position the title in the middle of the SVG
+    .attr("y", height*-1.85) // Position the title 20px from the top of the SVG
     .attr("text-anchor", "middle") // Anchor the text in the middle
-    .style("font-size", "20px") // Set the font size
+    .attr("fill", "black")
+    .style("font-size", "15px") // Set the font size
     .style("font-weight", "bold") // Set the font weight
-    .text("Crimes per 1.000 inhabitants per category in selected provinces"); // Set the title text
+    .attr("transform", "rotate(-90, " + (width / 2) + ", " + (-height * 0.05) + ")") // Rotate the text vertically
+    .text("Crimes per 1.000 inhabitants"); // Set the title text
 
 
 // Define a color scale
@@ -43,15 +46,15 @@ var categoriesToInclude = [
     "    6.2.-Contra la seguridad vial"];
 
 var categoryTranslations = {
-    "    1.1.-Homicidios dolosos/asesinatos": "Intentional Homicides/Assassinations",
+    "    1.1.-Homicidios dolosos/asesinatos": "Murder",
     "    3.1.-Agresión sexual": "Sexual Assault",
-    "    3.2.-Agresión sexual con penetración": "Sexual Assault with Penetration",
+    "    3.2.-Agresión sexual con penetración": "Rape",
     "    5.1.-Hurtos": "Thefts",
-    "    5.2.-Robos con fuerza en las cosas": "Robberies with Force",
-    "    5.3.1.-Robos con violencia en vía pública": "Robberies with Violence in Public Spaces",
-    "    5.3.2.-Robos con violencia en viviendas": "Robberies with Violence in Houses",
-    "    5.3.3.-Robos con violencia en establecimientos": "Robberies with Violence in Establishments",
-    "    6.2.-Contra la seguridad vial": "Against Road Safety"
+    "    5.2.-Robos con fuerza en las cosas": "Burglaries",
+    "    5.3.1.-Robos con violencia en vía pública": "Violent Street Robberies",
+    "    5.3.2.-Robos con violencia en viviendas": "Violent Home Robberies",
+    "    5.3.3.-Robos con violencia en establecimientos": "Violent Establishment Robberies",
+    "    6.2.-Contra la seguridad vial": "Road Safety"
 };
 
 
@@ -82,6 +85,16 @@ function computeCrimeRateLastYearPerProvince(data, selectedCategories, selectedP
   );
   return aggregatedData;
 }
+
+function computeCrimeRatePerProvince(data) {
+  var aggregatedData = d3.rollup(data, 
+      v => d3.sum(v, d => d.Amount) / d3.max(v, d => d.Population) * 1000, // Compute the crime rate per 1000 inhabitants
+      d => d.Place
+  );
+  return aggregatedData;
+}
+
+
 
 // Load the data
 d3.csv("data.csv").then((data) => {
@@ -189,6 +202,16 @@ function drawAxes(xAxis, yAxis) {
 
     svg.append("g")
     .call(yAxis);
+
+    // Append x-axis label
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 15)
+        .style("font-weight", "bold")
+        .attr("transform", "translate(" + (width / 2) + "," + (height + 30) + ")")
+        .text("Year");
+
 }
 
 // Function to create lines for each category
@@ -204,8 +227,6 @@ function drawCategoryLines(aggregatedData, line) {
         .attr("d", line);
     });
 }
-
-
 
 // Function to compute the most dangerous provinces
 // Returns a map with the top n provinces and their crime rate, and the rest of the provinces grouped in "Rest", with their average crime rate
@@ -226,7 +247,6 @@ function mostDangerousProvinces(crimeRatePerProvince, n=2) {
     console.log("Top N Provinces:", topNProvinces);
     return topNProvinces;
 }
-
 
 // Function to draw the legend
 function drawLegend(selectedCategories) {
@@ -451,19 +471,14 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       console.log(d3.mean(newData, d => d.Amount));
       console.log(d3.median(newData, d => d.Amount));
   
-    /*
-  
-    // Move the color scale here to share with both charts
-    const provinces = newData.map(d => d.Place);
-    const colors = d3.scaleOrdinal()
-      .domain(provinces)
-      .range(d3.quantize(d3.interpolateRainbow, provinces.length));*/
-  
-      // Move the color scale here to share with both charts
   const provinces = data.map(d=> d.Place);
   const uniqueProvinces = Array.from(new Set(provinces));
   const colors = d3.scaleOrdinal().domain(uniqueProvinces).range(d3.quantize(d3.interpolateRainbow, uniqueProvinces.length));
-  
+ 
+
+  const normalizedColorScale = d3.scaleSequential(d3.interpolateRgb("white","red"))
+  .domain([0, d3.max(data, d => d.Amount)/2]);
+
   
       //Plot Sunburst
       createSunburstChartZoomable2(transformedData);
@@ -472,7 +487,68 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       createBarChart(dataArrayByPlace);
   
       // Call the drawSpainMap function
-      //drawSpainMap();
+      //drawSpainMap(); 
+
+
+      document.getElementById('testButton').addEventListener('click', function () {
+        // Disable the button
+        this.disabled = true;
+
+        // Add 'clicked' class to initiate button animation
+        this.classList.add('clicked');
+      
+        // Start sunburst spin animation
+        document.getElementById('sunburst-container').style.animation = 'spin 3s linear';
+      
+        // Select all bars and apply the color change
+        var bars = document.querySelectorAll('#bar rect');
+      
+        // Store the original colors
+        var originalColors = Array.from(bars, bar => bar.style.fill);
+      
+        // Get the total number of bars
+        const numBars = bars.length;
+      
+        // Create a function to update bar colors
+        function updateBarColors() {
+          bars.forEach(function (bar) {
+            // Generate a random color
+            const randomColor = getRandomColor();
+            bar.style.fill = randomColor;
+          });
+        }
+      
+        // Call the function to update bar colors every 500 milliseconds
+        var interval = setInterval(updateBarColors, 100);
+      
+        // Reset animations after 3 seconds
+        setTimeout(function () {
+          document.getElementById('testButton').classList.remove('clicked');
+          document.getElementById('sunburst-container').style.animation = '';
+      
+          // Stop the color-changing interval
+          clearInterval(interval);
+      
+          // Restore original bar colors
+          bars.forEach(function (bar, i) {
+            bar.style.fill = originalColors[i];
+          });
+
+          // Enable the button
+          document.getElementById('testButton').disabled = false;
+        }, 3000);
+      });
+      
+      // Function to generate a random color
+      function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      
   
   });
 
@@ -650,7 +726,7 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
 
   const createBarChart = (data) => {
     const width = 1000, height = 1000;
-    const margins = { top: 10, right: 30, bottom: 140, left: 20 };
+    const margins = { top: 10, right: 30, bottom: 140, left: 50 };
   
     const svg = d3.select("#bar")
       .append("svg")
@@ -716,87 +792,3 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .style("font-weight", "bold");
   };
   
-
-  const createBarChart2 = (data, colors) => {
-    /* Set the dimensions and margins of the graph
-      Ref: https://observablehq.com/@d3/margin-convention */
-    const width = 1000, height = 1000;
-    const margins = { top: 10, right: 30, bottom: 140, left: 20 };
-  
-    /* Create the SVG container.....
-    # selects object in HTML... select all/ single div as well*/
-    const svg = d3.select("#bar")
-        .append("svg")
-        .attr("viewBox", [-20, -50, width, height]);
-  
-    /* Define x-axis, y-axis, and color scales
-      Ref: https://observablehq.com/@d3/introduction-to-d3s-scales */
-  
-    /* xScale: scaleBand() https://observablehq.com/@d3/d3-scaleband */
-    // the x-axis was categorical
-    const xScale = d3.scaleBand()
-        .domain(data.map(d => d.Place))
-        .range([margins.left, width - margins.right])
-        .padding(0.2);
-  
-    /* yScale: scaleLinear() https://observablehq.com/@d3/d3-scalelinear */
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.Amount)])
-      .range([height - margins.bottom, margins.top]);
-  
-  console.log("yScale domain:", yScale.domain());  // Log the yScale domain to the console
-  
-  // Create y-axis
-  const yAxis = d3.axisLeft(yScale)
-      .tickFormat(d3.format(".2s")); // Use ".2s" format to display numbers in a concise way
-  
-  // Append y-axis to the chart
-  const yGroup = svg.append("g")
-      .attr("transform", `translate(${margins.left}, 0)`)
-      .call(yAxis)
-      .call(g => g.select(".domain").remove());
-  
-  
-    /* Create the bar elements and append to the SVG group
-      Ref: https://observablehq.com/@d3/bar-chart */
-    let bar = svg.append("g")
-        .selectAll("rect")
-        .data(data)
-        .join("rect")
-        .attr("x", d => xScale(d.Place))
-        .attr("y", d => yScale(d.Amount))
-        .attr("width", d => xScale.bandwidth())
-        .attr("height", d => height - margins.bottom - yScale(d.Amount))
-        .attr("fill", d => colors(d.Place));
-  
-    /* Add vertical text with the Amount of each bar */
-    svg.append("g")
-      .selectAll("text")
-      .data(data)
-      .join("text")
-      .text(d => d.Amount)
-      .attr("x", d => xScale(d.Place) + xScale.bandwidth() +30)
-      .attr("y", d => yScale(d.Amount) -15) // Adjust Y position for text
-      .attr("dy", "1em") // Vertical alignment
-      .attr("text-anchor", "middle") // Center text
-      .style("font-size", "12px")
-      .style("fill", d => colors(d.Place)) // Use the same color scale for text
-      .attr("transform", d => `rotate(-65 ${xScale(d.Place) + xScale.bandwidth() / 2},${yScale(d.Amount)})`);
-  
-    /* Create the x and y axes and append them to the chart
-      Ref: https://www.d3indepth.com/axes/ and https://github.com/d3/d3-axis */
-  
-    const xAxis = d3.axisBottom(xScale);
-  
-    const xGroup = svg.append("g")
-        .attr("transform", `translate(0, ${height - margins.bottom})`)
-        .call(xAxis);
-  
-    xGroup.selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)")
-        .style("font-size", "12px")
-        .style("font-weight", "bold");
-  }
