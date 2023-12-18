@@ -870,3 +870,44 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
   
 
   
+  function createPieChart(percentage, containerSelector) {
+    const data = [percentage, 100 - percentage];
+  
+    const width = 200;
+    const height = 200;
+    const radius = Math.min(width, height) / 2;
+  
+    const color = d3.scaleOrdinal()
+      .range(['#02c40a', '#c4c4c4']);
+  
+    const pie = d3.pie();
+    const arc = d3.arc().innerRadius(0).outerRadius(radius);
+  
+    const svg = d3.select(containerSelector)
+      .append('svg')
+      .attr('width', width )
+      .attr('height', height + 30)
+      .append('g')
+      .attr('transform', `translate(${width / 2},${height / 2 + margin.top})`);
+  
+    const arcs = svg.selectAll('arc')
+      .data(pie(data))
+      .enter()
+      .append('g')
+      .attr('class', 'arc');
+  
+    arcs.append('path')
+      .attr('d', arc)
+      .attr('fill', (d, i) => color(i));
+  
+    arcs.append('text')
+      .attr('transform', d => `translate(${arc.centroid(d)})`)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', '15px')
+      .attr('fill', 'white')
+      .text(d => `${d.data.toFixed(1)}%`);
+  }
+
+  
+
+  
