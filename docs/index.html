@@ -6,45 +6,107 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <h1 style="text-align:center">
+  <h1 style="text-align:center; background-color: #7e3a3a; color: white;">
 		Crime and Safety: Moving to Spain?
 	</h1>
-  <div style="color:white; background-color: black;">
-    <h2 style="text-align:center; color: whitesmoke;">National Data</h3>
+  <div style="color:white; background-color: rgb(0, 0, 0);">
+    <h2 style="text-align:center; color: whitesmoke;">Spain as a Country</h3>
+
+    <hr style="width: 78%; margin: 0 auto; border: 2px solid #700a0a;">
+
+    <div style="text-align:center">
+        <p>Facing a crime or winning the lottery?</p>
+        <button id="testButton" class="nice-button">Test Your Luck!</button>
+        <div id="result-container"></div>
+        <div id="overlay" class="overlay"></div>
+
+    </div>
+    
+
+
     <div class="grid-container">
+      
       <div>
         <div id="bar" class="responsive-svg-container"></div>
-        <h3 style="text-align:center; color: whitesmoke;">Crimes per Province</h3>
+        <h3 style="text-align:center; color: whitesmoke;">Crimes per Province [2010-2022]</h3>
       </div>
       
       <div>
         <div id="sunburst-container" class="responsive-svg-container"></div>
-        <h3 style="text-align:center;  color: whitesmoke;">Crimes per Categories and Subcategories</h3>
+        <h3 style="text-align:center;  color: whitesmoke;">Crimes per Categories and Subcategories [2010-2022]</h3>
       </div>
     </div>
-    <div style="text-align:center">
-        <p>How safe would you be in Spain?</p>
-        <button id="testButton" class="nice-button">Test Your Luck!</button>
-    </div>
-    <div  style="text-align:center" > 
-      <hr style="width: 70%; margin: 0 auto; border: 1px solid grey;">
-      <p style="color: grey;">Imagine there are facts here focusing on crime</p>
-      <hr style="width: 70%; margin: 0 auto; border: 1px solid grey;">
+
+    
+    <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
+
+
+    <h2 style="text-align:center; color: whitesmoke;">Did you know...?</h3>
+    <div  class="quadra-grid-container" style="text-align:center" > 
+    
+      <div style="background-color: grey;">
+        <p>In 2022, </p>
+        <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">Madrid </p>
+        <p> was the province with most registered homicides with 183 cases</p>
+      </div>
+
+      <div style="background-color: grey;">
+        <p>In 2022, a daily average of </p>
+        <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">14K</p>
+        <p> crimes where registered in the country.</p>
+      </div>
+
+      <div style="background-color: grey;">
+        <p>In 2023, the city of </p>
+        <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">Bilbao</p>
+        <p>has the lowest Safety Index from Spain [<a href="https://www.numbeo.com/crime/region_rankings_current.jsp?region=150" target="_blank" style="font-size: 4;">*</a>]</p>
+      </div>
+
+      <div style="background-color: grey;">
+        <p>In 2022, a daily average of </p>
+        <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">4</p>
+        <p> homicides where registered in the country.</p>
+      </div>
+      
 
     </div>
+
+    <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
 
   </div>
-  <img src="drip.png" alt="Drip Image" style="width: 100%; max-width: 100%; ">  
-  <h2 style="text-align:center; ">Don't worry! It's not the same in every part of Spain</h3>
-    <div  style="text-align:center" > 
-      <hr style="width: 70%; margin: 0 auto; border: 1px solid grey;">
-      <p style="color: grey;">Imagine there are safety facts here (Maybe about fear of going out)</p>
-      <hr style="width: 70%; margin: 0 auto; border: 1px solid grey;">
+  <img src="assets/images/drip.png" alt="Drip Image" style="width: 100%; max-width: 100%; ">  
 
+  <h2 style="text-align:center; ">Don't worry! It's not as bad as it looks...</h2>
+    
+    <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+    <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">
+    
+    <div  class="quadra-grid-container" style="text-align:center" > 
+      <div style="background-color: whitesmoke;">
+        <p>In 2022, </p>
+        <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">90%</p>
+        <p> of people ended the year without facing any crime </p>
+      </div>
+      <div style="background-color: whitesmoke;">
+        <div class="pie-chart-container"></div>
+        <p>80.4% of spanish people feel safe walking alone at night [<a href="https://www.oecdbetterlifeindex.org/es/topics/safety-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+      </div>
+      <div style="background-color: whitesmoke;">
+        <p>Homicide rate in Spain is </p>
+        <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">3.7 times</p>
+        <p>lower than in other OECD countries [<a href="https://www.oecdbetterlifeindex.org/es/countries/spain-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+      </div>
+      <div style="background-color: whitesmoke;">
+        <p>Spain is inside the</p>
+        <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">19%</p>
+        <p>safest countries in the world [<a href="https://worldpopulationreview.com/country-rankings/most-peaceful-countries" target="_blank" style="font-size: 4;">*</a>]</p>
+      </div>
     </div>
-    <hr style="width: 70%; margin: 0 auto; border: 1px solid black;">
 
-  <h2 style="text-align:center; ">Still unsure? Personalize your scenario!</h3>
+    <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+    <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">
+
+  <h2 style="text-align:center; ">Still unsure where to move in? Personalize your scenario!</h3>
     <p style="text-align:center;">Filter by category and province to see the fluctuation of crimes there over time</p>
   
   <svg width="300" height="400"></svg>
@@ -63,5 +125,21 @@
       </div> 
   </div>
 <script src="assets/js/scripts.js"></script>
+
+
+
+
+
+<footer>
+
+  
+  <h4> Where does this data came from? Check our Sources:</h6>
+  <ul>
+    <li><a href="https://www.oecdbetterlifeindex.org/es/countries/spain-es/" target="_blank" style="font-size: 4;">OECD Better Life Index</a></li>
+    <li><a href="https://www.numbeo.com/crime/region_rankings_current.jsp?region=150" target="_blank" style="font-size: 4;">Europe: Current Crime Index by City</a></li>
+    <li><a href="https://worldpopulationreview.com/country-rankings/most-peaceful-countries" target="_blank" style="font-size: 4;">Most Peaceful Countries Ranking</a></li>
+
+  </ul>
+</footer>
 </body>
 </html>
