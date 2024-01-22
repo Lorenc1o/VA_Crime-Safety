@@ -906,8 +906,4 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .attr('font-size', '15px')
       .attr('fill', 'white')
       .text(d => `${d.data.toFixed(1)}%`);
-  }
-
-  
-
-  
+  }  
