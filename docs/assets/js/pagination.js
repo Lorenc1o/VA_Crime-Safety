@@ -25,14 +25,19 @@ function scrollToSection(direction) {
 
     // Check if the target section exists
     if (targetSection && targetSection.classList.contains('section')) {
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Calculate the position to scroll to
+        const headerHeight = 100; // Height of your fixed header, adjust as needed
+        const targetPosition = targetSection.offsetTop - headerHeight;
+
+        // Scroll to the target position
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+
         updateActiveSection(targetSection);
     } else {
         // If there's no next/previous section, do nothing
         console.log("No more sections in this direction.");
     }
 }
-
 
 // Update Active Section and Navigation Circles
 function updateActiveSection(newActiveSection) {

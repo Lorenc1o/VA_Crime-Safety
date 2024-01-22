@@ -1,6 +1,55 @@
 body{
+    padding-top: 100px;
     overflow: hidden;
+    background-color: #000;
   }
+
+  .section {
+    padding: 20px;
+    margin: 0 auto;
+    height: 100vh;
+    max-width: 100%;
+    background-color: #f8f8f8;
+    /*border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hide all sections */
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 1s ease-in-out;
+    display: grid;
+}
+
+.section.active {
+    display: block; /* Show only the active section */
+    opacity: 1;
+    transform: scale(0.95);
+}
+
+.section button:hover {
+    background-color: #0056b3;
+}
+
+.navigation-menu {
+  position: fixed;
+  right: 10px; /* Adjust this value as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+.nav-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: grey;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.nav-circle.active {
+  background-color: blue; /* Active section indicator */
+}  
 
 .axis path,
 .axis line {
@@ -67,8 +116,9 @@ label {
 .responsive-svg-container {
     margin-right: auto;
     margin-left: auto;
-    width: 100%;
-    max-width: 500px; 
+    width: 10%;
+    height: 100%;
+    /*max-width: 500px;*/
     background-color: transparent;
     color: grey;
   }
@@ -155,50 +205,3 @@ label {
   .footer{
     background: rgba(0, 0, 0, 0.7);
   }
-
-  .section {
-    padding: 20px;
-    margin: 0 auto;
-    height: 100%;
-    max-width: 100%;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: none; /* Initially hide all sections */
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.3s ease-in-out;
-    display: block;
-}
-
-.section.active {
-    display: block; /* Show only the active section */
-    opacity: 1;
-    transform: scale(0.95);
-}
-
-.section button:hover {
-    background-color: #0056b3;
-}
-
-.navigation-menu {
-  position: fixed;
-  right: 10px; /* Adjust this value as needed */
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1000; /* Ensure it's above other content */
-}
-
-
-.nav-circle {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: grey;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.nav-circle.active {
-  background-color: blue; /* Active section indicator */
-}  
