@@ -23,11 +23,16 @@ function scrollToSection(direction) {
         targetSection = currentSection.previousElementSibling;
     }
 
-    if (targetSection) {
+    // Check if the target section exists
+    if (targetSection && targetSection.classList.contains('section')) {
         targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         updateActiveSection(targetSection);
+    } else {
+        // If there's no next/previous section, do nothing
+        console.log("No more sections in this direction.");
     }
 }
+
 
 // Update Active Section and Navigation Circles
 function updateActiveSection(newActiveSection) {
