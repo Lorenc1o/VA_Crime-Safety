@@ -1,12 +1,12 @@
+body{
+    overflow: hidden;
+  }
+
 .axis path,
 .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
-}
-
-body{
-  overflow: hidden;
 }
 
 .axis text {
@@ -159,7 +159,8 @@ label {
   .section {
     padding: 20px;
     margin: 0 auto;
-    max-width: 90%; /* Adjust as needed */
+    height: 100%;
+    max-width: 100%;
     background-color: #f8f8f8;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -168,23 +169,16 @@ label {
     transform: scale(0.95);
     transition: all 0.3s ease-in-out;
     display: block;
-    margin-bottom: 100%;
-  }
+}
 
-  .section.active {
+.section.active {
     display: block; /* Show only the active section */
     opacity: 1;
-    transform: scale(1);
-  }
+    transform: scale(0.95);
+}
 
 .section button:hover {
     background-color: #0056b3;
-}
-
-/* Content styling */
-.section h2 {
-    color: #333;
-    text-align: center;
 }
 
 .navigation-menu {
