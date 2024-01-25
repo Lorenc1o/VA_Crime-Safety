@@ -1,14 +1,17 @@
 // Select the SVG element and get its width and height
-var width = 1000,
-height = 300;
+var viewportWidth = window.innerWidth,
+    viewportHeight = window.innerHeight;
+
+var width = viewportWidth * 0.67,
+height = viewportHeight * 0.35;
 const parseTime = d3.timeParse("%Y");
 duration = 3000;
 
 margin = {
-    top: height * 0.1,
+    top: height * 0.2,
     right: width * 0.15,
-    bottom: height * 0.1,
-    left: width * 0.3
+    bottom: height * 0.15,
+    left: width * 0.25
 }
 
 // Adjust SVG transformation to account for margins
@@ -20,15 +23,14 @@ var svg = d3.select("svg")
 
 // Append a title to the SVG
 svg.append("text")
-    .attr("x", width/3) // Position the title in the middle of the SVG
-    .attr("y", height*-1.85) // Position the title 20px from the top of the SVG
+    .attr("x", width*0.5) // Position the title in the middle of the SVG
+    .attr("y", -margin.top/2) // Position the title 20 units above the top margin
     .attr("text-anchor", "middle") // Anchor the text in the middle
     .attr("fill", "black")
     .style("font-size", "15px") // Set the font size
     .style("font-weight", "bold") // Set the font weight
-    .attr("transform", "rotate(-90, " + (width / 2) + ", " + (-height * 0.05) + ")") // Rotate the text vertically
-    .text("Crimes per 1.000 inhabitants"); // Set the title text
-
+    //.attr("transform", "rotate(-90, " + (width / 2) + ", " + (-height * 0.05) + ")") // Rotate the text vertically
+    .text("Crime rates in Spain in the past years"); // Set the title text
 
 // Define a color scale
 var color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -56,7 +58,6 @@ var categoryTranslations = {
     "    5.3.3.-Robos con violencia en establecimientos": "Violent Establishment Robberies",
     "    6.2.-Contra la seguridad vial": "Road Safety"
 };
-
 
 categoriesToInclude.forEach(category => {
     var checkbox = document.createElement('input');
@@ -94,8 +95,6 @@ function computeCrimeRatePerProvince(data) {
   return aggregatedData;
 }
 
-
-
 // Load the data
 d3.csv("data.csv").then((data) => {
 // Parse the data
@@ -120,22 +119,106 @@ provincesToRemove.forEach(province => {
 initialProvinces = ['Madrid', 'Barcelona', 'Murcia']
 
 // Create checkboxes for provinces
+// University data; https://www.universidades.gob.es/wp-content/uploads/2022/11/Datos_y_Cifras_2021_22.pdf
+var provinceInfo = {
+  "Almería": { universities: 1 },
+  "Cádiz": { universities: 5 },
+  "Córdoba": { universities: 2 },
+  "Granada": { universities: 4 },
+  "Huelva": { universities: 1 },
+  "Jaén": { universities: 2 },
+  "Málaga": { universities: 4 },
+  "Sevilla": { universities: 5 },
+  "Huesca": { universities: 1 },
+  "Teruel": { universities: 1 },
+  "Zaragoza": { universities: 7 },
+  "Asturias": { universities: 4 }, // Oviedo is the capital of Asturias, hence no province is listed
+  "Balears (Illes)": { universities: 3 },
+  "Palmas (Las)": { universities: 4 },
+  "Santa Cruz de Tenerife": { universities: 1 },
+  "Cantabria": { universities: 4 }, // Santander is the capital of Cantabria, hence no province is listed
+  "Albacete": { universities: 1 },
+  "Ciudad Real": { universities: 2 },
+  "Cuenca": { universities: 1 },
+  "Guadalajara": { universities: 1 },
+  "Toledo": { universities: 1 },
+  "Ávila": { universities: 2 },
+  "Burgos": { universities: 2 },
+  "León": { universities: 3 },
+  "Palencia": { universities: 1 },
+  "Salamanca": { universities: 5 },
+  "Segovia": { universities: 1 },
+  "Soria": { universities: 1 },
+  "Valladolid": { universities: 4 },
+  "Zamora": { universities: 1 },
+  "Barcelona": { universities: 18 },
+  "Girona": { universities: 2 },
+  "Lleida": { universities: 3 },
+  "Tarragona": { universities: 2 },
+  "Alicante": { universities: 5 },
+  "Castellón/Castelló": { universities: 1 },
+  "Valencia": { universities: 16 },
+  "Badajoz": { universities: 3 },
+  "Cáceres": { universities: 3 },
+  "La Coruña": { universities: 6 },
+  "Lugo": { universities: 1 },
+  "Ourense": { universities: 2 },
+  "Pontevedra": { universities: 2 },
+  "Madrid": { universities: 22 }, 
+  "Murcia": { universities: 4 }, 
+  "Navarra": { universities: 5 }, 
+  "Araba/Áraba": { universities: 2 },
+  "Vizcaya": { universities: 10 },
+  "Gipuzkoa": { universities: 3 },
+  "Rioja (La)": { universities: 1 },
+  "Ceuta": { universities: 0},
+  "Melilla": { universities: 0}
+};
+
+
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+// ... existing code ...
+
 provinces.forEach(province => {
-    var checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.name = "province";
-    checkbox.value = province;
-    checkbox.id = province;
-    checkbox.checked = initialProvinces.includes(province);
+  var checkbox = document.createElement('input');
+  checkbox.type = "checkbox";
+  checkbox.name = "province";
+  checkbox.value = province;
+  checkbox.id = province;
+  checkbox.checked = initialProvinces.includes(province);
 
-    var label = document.createElement('label');
-    label.htmlFor = province;
-    label.appendChild(document.createTextNode(province));
+  var label = document.createElement('label');
+  label.htmlFor = province;
+  label.appendChild(document.createTextNode(province));
 
-    var container = document.getElementById('province-selectors');
-    container.appendChild(checkbox);
-    container.appendChild(label);
-    container.appendChild(document.createElement('br'));
+  var container = document.getElementById('province-selectors');
+  container.appendChild(checkbox);
+  container.appendChild(label);
+  container.appendChild(document.createElement('br'));
+
+  // Convert label to D3 selection and add mouseover and mouseout handlers
+  d3.select(label)
+    .on("mouseover", function(event) {
+        tooltip.transition()
+            .duration(200)
+            .style("opacity", .9);
+        population = data.find(d => d.Place == province && d.Year.getFullYear() == 2022).Population;
+        tooltip.html("Population: " + population + "<br/>" +
+                    "Universities: " + provinceInfo[province].universities + "<br/>" +
+                    /*"PIB per Capita: " + provinceInfo[province].pibPerCapita + "<br/>" +
+                    /* Other stats */
+                    "")
+            .style("left", (event.pageX) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", function() {
+        tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+    });
 });
 
 // Function to process the data
@@ -166,8 +249,6 @@ function processData(data, categoriesToInclude, provincesToInclude){
         },
         d => d["Crime Category"] // Group by crime category
     );
-    
-
     console.log("Aggregated Data:", aggregatedData);
 
     return aggregatedData;
@@ -212,6 +293,14 @@ function drawAxes(xAxis, yAxis) {
         .attr("transform", "translate(" + (width / 2) + "," + (height + 30) + ")")
         .text("Year");
 
+    // Append y-axis label
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 15)
+        .style("font-weight", "bold")
+        .attr("transform", "translate(" + (-30) + "," + (height / 2) + ")rotate(-90)")
+        .text("Crimes per 1.000 inhabitants");
 }
 
 // Function to create lines for each category
@@ -248,27 +337,87 @@ function mostDangerousProvinces(crimeRatePerProvince, n=2) {
     return topNProvinces;
 }
 
+// Function to handle text wrapping (split text into multiple lines if it exceeds the specified width)
+function wrapText(text, width) {
+  var lineHeight = 1.1; // ems
+  text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", -margin.left + 24).attr("y", y).attr("dy", dy + "em");
+
+      while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", -margin.left + 24).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+      }
+
+      // Store the number of lines for each text
+      text.attr("data-line-count", lineNumber + 1);
+  });
+}
+
 // Function to draw the legend
 function drawLegend(selectedCategories) {
-    var legend = svg.selectAll(".legend")
-    .data(color.domain().filter(d => selectedCategories.includes(d)))
-    .enter().append("g")
-    .attr("class", "legend")
-    .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
+  var maxWidth = margin.left * 0.7;
+  var lineHeight = 20;
+  var verticalSpacing = 0;
 
-    legend.append("rect")
-    .attr("x", -margin.left)
-    .attr("width", 18)
-    .attr("height", 18)
-    .style("fill", color);
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", (d, i) => "translate(0," + i * 20 + ")")
+      .style("cursor", "pointer") // Add pointer cursor on hover
+      .on("click", function(event, d) {
+          // Toggle category selection
+          const index = selectedCategories.indexOf(d);
+          if (index > -1) {
+              selectedCategories.splice(index, 1); // Remove from array
+          } else {
+              selectedCategories.push(d); // Add to array
+          }
 
-    legend.append("text")
-    .attr("x", -margin.left + 24)
-    .attr("y", 9)
-    .attr("dy", ".35em")
-    .style("text-anchor", "start")
-    .style("font-size", "14px")
-    .text(d => categoryTranslations[d]);
+          // Update checkboxes
+          d3.select(`input[value='${d}']`).property("checked", !d3.select(`input[value='${d}']`).property("checked"));
+
+          // Update chart
+          updateChart();
+      });
+
+  legend.append("rect")
+      .attr("x", -margin.left)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", d => selectedCategories.includes(d) ? color(d) : "#ccc"); // Conditional color
+
+  legend.append("text")
+        .attr("x", -margin.left + 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "start")
+        .style("font-size", "14px")
+        .text(d => categoryTranslations[d])
+        .style("fill", d => selectedCategories.includes(d) ? "black" : "#ccc")
+        .call(wrapText, maxWidth);
+
+    // Adjust vertical position based on the number of lines
+    var cumulativeHeight = 0;
+    legend.each(function(d, i) {
+        var text = d3.select(this).select("text");
+        var lineCount = text.attr("data-line-count");
+        d3.select(this).attr("transform", "translate(0," + cumulativeHeight + ")");
+        cumulativeHeight += lineHeight * lineCount + verticalSpacing; // Update cumulative height
+    });
 }
 
 function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
@@ -385,21 +534,7 @@ function updateChart() {
 updateChart();
 
 d3.selectAll("input[name='category']").on("change", updateChart);
-d3.selectAll("input[name='category'], input[name='province']").on("change", updateChart);
-
-document.getElementById("select-all-categories").addEventListener("click", function() {
-    document.querySelectorAll("#category-selectors input[type='checkbox']").forEach(function(checkbox) {
-        checkbox.checked = true;
-    });
-    updateChart();
-});
-
-document.getElementById("deselect-all-categories").addEventListener("click", function() {
-    document.querySelectorAll("#category-selectors input[type='checkbox']").forEach(function(checkbox) {
-        checkbox.checked = false;
-    });
-    updateChart();
-});
+d3.selectAll("input[name='category'], input[name='province']").on("change", updateChart); 
 
 document.getElementById("select-all-provinces").addEventListener("click", function() {
     document.querySelectorAll("#province-selectors input[type='checkbox']").forEach(function(checkbox) {
@@ -417,6 +552,35 @@ document.getElementById("deselect-all-provinces").addEventListener("click", func
 
 })
 
+function add_population(data){
+// Read the population data from spain_population_tidy.csv and add it to the variable data,
+    // taking into account the year and the place
+    d3.csv("./spain_population_tidy.csv", d => {
+      return {
+          Place: d.Place,
+          Year: +d.Year,
+          Population: +d.Population,
+      }
+    }).then(populationData => {
+      //populationData.forEach(d => {
+      //    d.Year = d3.timeParse("%Y")(d.Year);
+      //});
+      console.log("Population data:", populationData)
+      data.forEach(d => {
+        const populationRecord = populationData.find(populationEntry => populationEntry.Place == d.Place && populationEntry.Year == d.Year);
+        if (populationRecord) {
+            d.Population = populationRecord.Population;
+        } else {
+            // Handle the case where no matching population data is found
+            // You might want to set Population to a default value or log a warning
+            console.warn(`No population data found for Place: ${d.Place}, Year: ${d.Year}`);
+            d.Population = null; // or some default value
+        }
+    });
+  });
+  return data;
+}
+
 d3.csv("./spain_tidy_subcategories.csv", d => {
     return {
         Place: d.Place,
@@ -424,10 +588,14 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
         SubCategory: d.SubCategory,
         Year: +d.Year,
         Amount: +d.Amount,
+        Population: 0,
         date: parseTime(d.Year)
     }
   }).then(data => {
-  
+
+      // Drop rows with Place in [Abroad, Desconocida]
+      data = data.filter(d => d.Place != "Abroad" && d.Place != "Desconocida");   
+
       console.log(data);
       //data.forEach(d => console.log(typeof d));
   
@@ -438,16 +606,43 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       // console.log(d3.min(data, d => d.value));
       // console.log(d3.max(data, d => d.value));
       // console.log(d3.extent(data, d => d.value));
+
+      //console.log("Data prev:", data[0]);
+      data = add_population(data)
+      console.log("Data aft:", data[0]);
   
       // Filter the data from the year 2020
       let newData = data.filter(d => d.Year === 2020);
       console.log(newData);
+
+      console.log("Data:", data[0]);
+      // Print fields of the first element
+      console.log("Fields of the first element:", Object.keys(data[0]));
+      console.log("Values of the first element:", Object.values(data[0]));
   
       //Data for the bar chart
-      const rollupByPlace = d3.rollup(data, i => d3.sum(i, data => data.Amount), data => data.Place)
-      const dataArrayByPlace = Array.from(rollupByPlace, ([Place, Amount]) => ({ Place, Amount }));
-      dataArrayByPlace.sort((a, b) => b.Amount - a.Amount); // Sort the country by the percentage in the descending order
-      console.log(dataArrayByPlace)
+      // Calculate the total crimes and total population by place and year
+      const totalCrimesByPlaceAndYear = d3.rollup(data, v => d3.sum(v, d => d.Amount), d => d.Place, d => d.Year);
+      const totalPopulationByPlaceAndYear = d3.rollup(data, v => d3.mean(v, d => d.Population), d => d.Place, d => d.Year);
+
+      console.log("Total Crimes by Place and Year:", totalCrimesByPlaceAndYear);
+      console.log("Total Population by Place and Year:", totalPopulationByPlaceAndYear);
+
+      // Calculate the average crime rate per place
+      const avgCrimeRatePerPlace = Array.from(totalCrimesByPlaceAndYear, ([place, years]) => {
+          return {
+              Place: place,
+              AvgCrimeRate: Array.from(years).reduce((acc, [year, totalCrimes]) => {
+                  const totalPopulation = totalPopulationByPlaceAndYear.get(place).get(year) || 0;
+                  return acc + (totalPopulation ? (totalCrimes / totalPopulation) * 1000000 : 0);
+              }, 0) / years.size
+          };
+      });
+
+      // Sort the places by the average crime rate in descending order
+      avgCrimeRatePerPlace.sort((a, b) => b.AvgCrimeRate - a.AvgCrimeRate);
+
+      console.log("Average Crime Rate per Place:", avgCrimeRatePerPlace);
   
       //Data for sunburst
       let rollupBySubcategory = d3.rollup(data, i => d3.sum(i, data => data.Amount), data => data.Category, data => data.SubCategory)
@@ -484,7 +679,7 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       createSunburstChartZoomable2(transformedData);
       
       // Plot the bar chart
-      createBarChart(dataArrayByPlace);
+      createBarChart(avgCrimeRatePerPlace);
 
       createPieChart(80.4, '.pie-chart-container');
   
