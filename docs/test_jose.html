@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visual Analytics: D3 Assignment</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</html>
+<body>
+  <div class="custheader">
+		Crime and Safety: Moving to Spain?
+  </div>
+
+    <div class="navigation-menu">
+        <div class="nav-circle" data-target="section1"></div>
+        <div class="nav-circle" data-target="section2"></div>
+        <div class="nav-circle" data-target="section3"></div>
+        <div class="nav-circle" data-target="section4"></div>
+        <div class="nav-circle" data-target="section5"></div>
+    </div>
+
+    <div id="section1" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <h2 style="text-align:center; color: whitesmoke;">Spain as a Country</h3>
+    
+        <hr style="width: 78%; margin: 0 auto; border: 2px solid #700a0a;">
+    
+        <div style="text-align:center">
+            <p>Facing a crime or winning the lottery?</p>
+            <button id="testButton" class="nice-button">Test Your Luck!</button>
+            <div id="result-container"></div>
+            <div id="overlay" class="overlay"></div>
+        </div>
+
+        <div>
+          <div id="bar" class="responsive-svg-container"></div>
+          <h3 style="text-align:center; color: whitesmoke;">Crimes per Province [2010-2022]</h3>
+        </div>
+        <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
+    </div>
+
+    <div id="section2" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      <div>
+        <div id="sunburst-container" class="responsive-svg-container"></div>
+        <h3 style="text-align:center;  color: whitesmoke;">Crimes per Categories and Subcategories [2010-2022]</h3>
+      </div>
+    </div>
+    
+    <div id="section3" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <h2 style="text-align:center; color: whitesmoke;">Did you know...?</h3>
+            <div  class="quadra-grid-container" style="text-align:center" > 
+            
+              <div style="background-color: grey;">
+                <p>In 2022, </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">Madrid </p>
+                <p> was the province with most registered homicides with 183 cases</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2022, a daily average of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">14K</p>
+                <p> crimes where registered in the country.</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2023, the city of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">Bilbao</p>
+                <p>has the lowest Safety Index from Spain [<a href="https://www.numbeo.com/crime/region_rankings_current.jsp?region=150" target="_blank" style="font-size: 4;">*</a>]</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2022, a daily average of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 0;">4</p>
+                <p> homicides where registered in the country.</p>
+              </div>
+            </div>
+        
+            <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
+    </div>
+
+    <div id="section4" class="section">
+      <h2 style="text-align:center; ">Don't worry! It's not as bad as it looks...</h2>
+    
+      <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+      <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">
+      
+      <div  class="quadra-grid-container" style="text-align:center" > 
+        <div style="background-color: whitesmoke;">
+          <p>In 2022, </p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">90%</p>
+          <p> of people ended the year without facing any crime </p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <div class="pie-chart-container"></div>
+          <p>80.4% of spanish people feel safe walking alone at night [<a href="https://www.oecdbetterlifeindex.org/es/topics/safety-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <p>Homicide rate in Spain is </p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">3.7 times</p>
+          <p>lower than in other OECD countries [<a href="https://www.oecdbetterlifeindex.org/es/countries/spain-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <p>Spain is inside the</p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 0;">19%</p>
+          <p>safest countries in the world [<a href="https://worldpopulationreview.com/country-rankings/most-peaceful-countries" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="section5" class="section">
+  <h2 style="text-align:center; ">Still unsure where to move in? Personalize your scenario!</h3>
+    <p style="text-align:center;">Filter by category and province to see the fluctuation of crimes there over time</p>
+    <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+    <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">  
+    <svg width="300" height="400"></svg>
+  <div id="selectors-container">
+      <div class="selector-box" id="category-selector-box" style="display: none">
+          <h3>Crime Categories</h3>
+          <div id="category-selectors"></div>
+      </div>
+      <div class="selector-box" id="province-selector-box">
+        <div class="selector-header">
+          <button class="nice-button" id="select-all-provinces">Select All</button>
+          <button class="nice-button" id="deselect-all-provinces">Deselect All</button>
+            <h3>Provinces</h3>
+        </div>
+    
+        <div class="selectors-and-legend-container">
+            <div id="province-selectors"></div>
+            <div class="legend-box">
+              <h4>Legend</h4>
+              <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-population" checked> <span>🏙️- More than 1 million inhabitants</span> </label></p>
+              <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-universities" checked> <span>📚- More than 3 universities</span></label></p>
+              <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-gdp" checked> <span>💰- GDP per capita higher than 30K €</span></label></p>
+              <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-police" checked> <span>👮- More than 400 police officers per 1000 inhabitants</span></label></p>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="assets/js/pagination.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+</body>
+
+

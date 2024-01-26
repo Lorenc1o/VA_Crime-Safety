@@ -92,6 +92,7 @@ body{
     margin-right: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: small;
 }
 
 .selector-header {
@@ -117,6 +118,57 @@ input[type="checkbox"] {
 label {
     margin-right: 15px;
     font-family: Arial, sans-serif;
+}
+
+.selectors-and-legend-container {
+  display: flex;
+  justify-content: space-between; /* Adjusts the space between the two divs */
+  align-items: start; /* Aligns items to the start of the flex container */
+}
+
+#province-selectors {
+  flex-grow: 1; /* Allows this div to grow and take up available space */
+  margin-right: 20px; /* Adds some space between the selectors and the legend */
+}
+
+.legend-box {
+  margin-top: 0;
+  padding: 0;
+  background-color: #f2f2f2; /* Light grey background */
+  border: 1px solid #dcdcdc; /* Light grey border */
+  border-radius: 5px;
+  width: 15%;
+}
+
+.legend-box h4 {
+  margin: 0;
+  text-align: center; 
+}
+
+.legend-box p {
+  margin: 0;
+  font-size: 0.8em;
+}
+
+.legend-box span {
+  font-weight: bold;
+}
+
+/* Hide the default checkbox */
+.emoji-checkbox {
+  display: none;
+}
+
+/* Style for span when checkbox is not checked */
+.emoji-checkbox + span {
+  color: black; /* default color */
+  background-color: #f2f2f2; /* default background color */
+}
+
+/* Style for span when checkbox is checked */
+.emoji-checkbox:checked + span {
+  color: white; /* white text */
+  background-color: #808080; /* grey background */
 }
 
 #province-selectors {

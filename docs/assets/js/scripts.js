@@ -32,8 +32,17 @@ svg.append("text")
     //.attr("transform", "rotate(-90, " + (width / 2) + ", " + (-height * 0.05) + ")") // Rotate the text vertically
     .text("Crime rates in Spain in the past years"); // Set the title text
 
-// Define a color scale
-var color = d3.scaleOrdinal(d3.schemeCategory10);
+// Define a custom color scale
+var myColors = ["#1F0954", //Murders: dark blue
+"#CCFF66", //Sexual Assault: soft green
+"#123524", //Rape: dark green
+"#f1c232", //Thefts: dark yellow
+"#ffe599", //Burglaries: soft yellow
+"#FF0000", //Violent Street Robberies: red
+"#990000", //Violent Home Robberies: dark red
+"#660000", //Violent Establishment Robberies: dark red
+"#9D92F0"]; //Road Safety: red
+var color = d3.scaleOrdinal(myColors);
 
 // Define categories
 var categoriesToInclude = [
@@ -120,59 +129,62 @@ initialProvinces = ['Madrid', 'Barcelona', 'Murcia']
 
 // Create checkboxes for provinces
 // University data; https://www.universidades.gob.es/wp-content/uploads/2022/11/Datos_y_Cifras_2021_22.pdf
+// GDP per capita data: https://www.ine.es/prensa/cre_2022.pdf
+// Police data: https://www.newtral.es/numero-policias-espana-total-policia-nacional-guardia-civil/20211220/
+
 var provinceInfo = {
-  "Almería": { universities: 1 },
-  "Cádiz": { universities: 5 },
-  "Córdoba": { universities: 2 },
-  "Granada": { universities: 4 },
-  "Huelva": { universities: 1 },
-  "Jaén": { universities: 2 },
-  "Málaga": { universities: 4 },
-  "Sevilla": { universities: 5 },
-  "Huesca": { universities: 1 },
-  "Teruel": { universities: 1 },
-  "Zaragoza": { universities: 7 },
-  "Asturias": { universities: 4 }, // Oviedo is the capital of Asturias, hence no province is listed
-  "Balears (Illes)": { universities: 3 },
-  "Palmas (Las)": { universities: 4 },
-  "Santa Cruz de Tenerife": { universities: 1 },
-  "Cantabria": { universities: 4 }, // Santander is the capital of Cantabria, hence no province is listed
-  "Albacete": { universities: 1 },
-  "Ciudad Real": { universities: 2 },
-  "Cuenca": { universities: 1 },
-  "Guadalajara": { universities: 1 },
-  "Toledo": { universities: 1 },
-  "Ávila": { universities: 2 },
-  "Burgos": { universities: 2 },
-  "León": { universities: 3 },
-  "Palencia": { universities: 1 },
-  "Salamanca": { universities: 5 },
-  "Segovia": { universities: 1 },
-  "Soria": { universities: 1 },
-  "Valladolid": { universities: 4 },
-  "Zamora": { universities: 1 },
-  "Barcelona": { universities: 18 },
-  "Girona": { universities: 2 },
-  "Lleida": { universities: 3 },
-  "Tarragona": { universities: 2 },
-  "Alicante": { universities: 5 },
-  "Castellón/Castelló": { universities: 1 },
-  "Valencia": { universities: 16 },
-  "Badajoz": { universities: 3 },
-  "Cáceres": { universities: 3 },
-  "La Coruña": { universities: 6 },
-  "Lugo": { universities: 1 },
-  "Ourense": { universities: 2 },
-  "Pontevedra": { universities: 2 },
-  "Madrid": { universities: 22 }, 
-  "Murcia": { universities: 4 }, 
-  "Navarra": { universities: 5 }, 
-  "Araba/Áraba": { universities: 2 },
-  "Vizcaya": { universities: 10 },
-  "Gipuzkoa": { universities: 3 },
-  "Rioja (La)": { universities: 1 },
-  "Ceuta": { universities: 0},
-  "Melilla": { universities: 0}
+  "Almería": { universities: 1, gdppc: 21464, police: 292.0},
+  "Cádiz": { universities: 5, gdppc: 18114, police: 292.0},
+  "Córdoba": { universities: 2, gdppc: 18838, police: 292.0},
+  "Granada": { universities: 4, gdppc: 18537, police: 292.0},
+  "Huelva": { universities: 1, gdppc: 20317, police: 292.0},
+  "Jaén": { universities: 2, gdppc: 18791, police: 292.0},
+  "Málaga": { universities: 4, gdppc: 18044, police: 292.0},
+  "Sevilla": { universities: 5, gdppc: 20859, police: 292.0},
+  "Huesca": { universities: 1, gdppc: 30295, police: 356.3},
+  "Teruel": { universities: 1, gdppc: 25827, police: 356.3},
+  "Zaragoza": { universities: 7, gdppc: 28679, police: 356.3},
+  "Asturias": { universities: 4, gdppc: 23369, police: 326.2},
+  "Balears (Illes)": { universities: 3, gdppc: 25420, police: 282.2},
+  "Palmas (Las)": { universities: 4, gdppc: 19506, police: 309.8},
+  "Santa Cruz de Tenerife": { universities: 1, gdppc: 19833, police: 309.8},
+  "Cantabria": { universities: 4, gdppc: 23988, police: 272.5},
+  "Albacete": { universities: 1, gdppc: 22438, police: 308.1},
+  "Ciudad Real": { universities: 2, gdppc: 22039, police: 308.1},
+  "Cuenca": { universities: 1, gdppc: 23383, police: 308.1},
+  "Guadalajara": { universities: 1, gdppc: 20608, police: 308.1},
+  "Toledo": { universities: 1, gdppc: 18641, police: 308.1},
+  "Ávila": { universities: 2, gdppc: 20750, police: 392.1},
+  "Burgos": { universities: 2, gdppc: 28942, police: 392.1},
+  "León": { universities: 3, gdppc: 22698, police: 392.1},
+  "Palencia": { universities: 1, gdppc: 27177, police: 392.1},
+  "Salamanca": { universities: 5, gdppc: 22337, police: 392.1},
+  "Segovia": { universities: 1, gdppc: 22519, police: 392.1},
+  "Soria": { universities: 1, gdppc: 28621, police: 392.1},
+  "Valladolid": { universities: 4, gdppc: 27595, police: 392.1},
+  "Zamora": { universities: 1, gdppc: 21277, police: 392.1},
+  "Barcelona": { universities: 18, gdppc: 30481, police: 85.4},
+  "Girona": { universities: 2, gdppc: 27127, police: 85.4},
+  "Lleida": { universities: 3, gdppc: 28598, police: 85.4},
+  "Tarragona": { universities: 2, gdppc: 29617, police: 85.4},
+  "Alicante": { universities: 5, gdppc: 19705, police: 258.2},
+  "Castellón/Castelló": { universities: 1, gdppc: 27452, police: 258.2},
+  "Valencia": { universities: 16, gdppc: 23647, police: 258.2},
+  "Badajoz": { universities: 3, gdppc: 19012, police: 355.3},
+  "Cáceres": { universities: 3, gdppc: 20354, police: 355.3},
+  "La Coruña": { universities: 6, gdppc: 24457, police: 283.5},
+  "Lugo": { universities: 1, gdppc: 22781, police: 283.5},
+  "Ourense": { universities: 2, gdppc: 23357, police: 283.5},
+  "Pontevedra": { universities: 2, gdppc: 23279, police: 283.5},
+  "Madrid": { universities: 22, gdppc: 35380, police: 553.6},
+  "Murcia": { universities: 4, gdppc: 21482, police: 222.8},
+  "Navarra": { universities: 5, gdppc: 31042, police: 333.1},
+  "Araba/Áraba": { universities: 2, gdppc: 38829, police: 159.2},
+  "Vizcaya": { universities: 10, gdppc: 30848, police: 159.2},
+  "Gipuzkoa": { universities: 3, gdppc: 32971, police: 159.2},
+  "Rioja (La)": { universities: 1, gdppc: 26977, police: 454.8},
+  "Ceuta": { universities: 0, gdppc: 21228, police: 1275.4},
+  "Melilla": { universities: 0, gdppc: 18819, police: 1294.9}
 };
 
 
@@ -180,7 +192,33 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-// ... existing code ...
+function generateProvinceText(province, showPopulation, showUniversities, showGDP, showPolice) {
+  var provinceText = province;
+  var info = provinceInfo[province];
+  
+  if (!info) {
+      console.warn("No data found for province:", province);
+      return provinceText;
+  }
+
+  var population = data.find(d => d.Place == province && d.Year.getFullYear() == 2022).Population;
+
+  if (showPopulation && population > 1000000) {
+      provinceText += " 🏙️";
+  }
+  if (showUniversities && info.universities > 3) {
+      provinceText += " 📚";
+  }
+  if (showGDP && info.gdppc > 30000) {
+      provinceText += " 💰";
+  }
+  if (showPolice && info.police > 400) {
+      provinceText += " 👮";
+  }
+
+  return provinceText;
+}
+  
 
 provinces.forEach(province => {
   var checkbox = document.createElement('input');
@@ -192,7 +230,11 @@ provinces.forEach(province => {
 
   var label = document.createElement('label');
   label.htmlFor = province;
-  label.appendChild(document.createTextNode(province));
+  
+  // Add emojis based on conditions
+  var provinceText = generateProvinceText(province, true, true, true, true);
+
+  label.appendChild(document.createTextNode(provinceText));
 
   var container = document.getElementById('province-selectors');
   container.appendChild(checkbox);
@@ -208,9 +250,7 @@ provinces.forEach(province => {
         population = data.find(d => d.Place == province && d.Year.getFullYear() == 2022).Population;
         tooltip.html("Population: " + population + "<br/>" +
                     "Universities: " + provinceInfo[province].universities + "<br/>" +
-                    /*"PIB per Capita: " + provinceInfo[province].pibPerCapita + "<br/>" +
-                    /* Other stats */
-                    "")
+                    "GDP per capita: " + provinceInfo[province].gdppc + "€" + "<br/>")
             .style("left", (event.pageX) + "px")
             .style("top", (event.pageY - 28) + "px");
     })
@@ -318,24 +358,31 @@ function drawCategoryLines(aggregatedData, line) {
 }
 
 // Function to compute the most dangerous provinces
-// Returns a map with the top n provinces and their crime rate, and the rest of the provinces grouped in "Rest", with their average crime rate
+// Returns a map with the top n provinces and their crime rate, also the top n provinces with lowest crime rate, the rest are averaged
+// For example, if n = 2, the map will contain 4 provinces: the 2 most dangerous, the 2 least dangerous and the average of the rest
 function mostDangerousProvinces(crimeRatePerProvince, n=2) {
+    if (crimeRatePerProvince.size <= 2*n) { // If there are less than 2*n provinces, return all of them sorted by crime rate
+        return Array.from(crimeRatePerProvince, ([province, crimeRate]) => ({ province, crimeRate })).sort((a, b) => b.crimeRate - a.crimeRate);
+    }
+    // Else, we compute the top n provinces and the bottom n provinces, and average the rest
     var sortedProvinces = Array.from(crimeRatePerProvince, ([province, crimeRate]) => ({ province, crimeRate })).sort((a, b) => b.crimeRate - a.crimeRate);
     var topNProvinces = sortedProvinces.slice(0, n);
-    var otherProvinces = sortedProvinces.slice(n);
+    var leastNProvinces = sortedProvinces.slice(-n);
+    var otherProvinces = sortedProvinces.slice(n, -n);
     var averageCrimeRate = d3.mean(otherProvinces, d => d.crimeRate);
 
-    // If there are no other provinces, return the top n provinces
+    all = topNProvinces.concat(leastNProvinces);
+
+    // If there are no other provinces, return all
     if (otherProvinces.length == 0) {
-        return topNProvinces;
+        return all;
     }
 
-    var otherProvincesMap = new Map();
-    otherProvinces.forEach(d => otherProvincesMap.set(d.province, averageCrimeRate));
     topNProvinces.push({province: "Rest", crimeRate: averageCrimeRate});
-    console.log("Top N Provinces:", topNProvinces);
-    return topNProvinces;
+    return topNProvinces.concat(leastNProvinces);
 }
+
+
 
 // Function to handle text wrapping (split text into multiple lines if it exceeds the specified width)
 function wrapText(text, width) {
@@ -441,15 +488,19 @@ function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
 
     console.log("Series:", series);
 
-    var colors = ["#BAE3F2", "#C9F2EB", "#E6FCED"]; 
+    var colors = ["#7e3a3a", // Worst: red
+      "#FF7276", // Bad: soft red
+      "#FFFFFF", // Average: white
+      "#D9EAD3", // Good: soft green
+      "#66CA3B"]; // Best: green
 
     var yScaleStacked = d3.scaleLinear()
         .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
         .range([height, 0]);
 
     var xScaleStacked = d3.scaleBand()
-        .domain(["crimeRate"])
-        .range([width, width/10*11])
+        .domain(["crimeRate"]) // Only one bar
+        .range([width, width/100*115]) // Adjust the width of the bars
         .padding(0.1);
 
     var color = d3.scaleOrdinal()
@@ -492,12 +543,12 @@ function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
 
     // Add title
     svg.append("text")
-        .attr("x", width + margin.right/3)
+        .attr("x", width + margin.right/2.5)
         .attr("y", -margin.top/1.5)
         .attr("text-anchor", "middle")
         .attr("font-size", "14px")
         .attr("font-weight", "bold")
-        .text("Most dangerous provinces");
+        .text("Crime rates summary");
 
     // Add subtitle
     svg.append("text")
@@ -522,6 +573,7 @@ function updateChart() {
     svg.selectAll("path").remove();
     svg.selectAll(".legend").remove();
     svg.selectAll("g").remove();
+    svg.selectAll("text").remove();
 
     // Redraw lines and legend
     const {xScale, yScale, xAxis, yAxis, line} = createScales(filteredData);
@@ -549,6 +601,35 @@ document.getElementById("deselect-all-provinces").addEventListener("click", func
     });
     updateChart();
 });
+
+document.getElementById("emoji-population").addEventListener("change", function() {
+  toggleEmojiDisplay();
+});
+
+document.getElementById("emoji-universities").addEventListener("change", function() {
+  toggleEmojiDisplay();
+});
+
+document.getElementById("emoji-gdp").addEventListener("change", function() {
+  toggleEmojiDisplay();
+});
+
+document.getElementById("emoji-police").addEventListener("change", function() {
+  toggleEmojiDisplay();
+});
+
+function toggleEmojiDisplay(emoji) {
+  var showPopulation = document.getElementById("emoji-population").checked;
+  var showUniversities = document.getElementById("emoji-universities").checked;
+  var showGDP = document.getElementById("emoji-gdp").checked;
+  var showPolice = document.getElementById("emoji-police").checked;
+
+  d3.selectAll("#province-selectors label").text(function() {
+      var province = this.innerText.replace(" 🏙️", "").replace(" 📚", "").replace(" 💰", "").replace(" 👮", "");
+      return generateProvinceText(province, showPopulation, showUniversities, showGDP, showPolice);
+  }
+  );
+}
 
 })
 
