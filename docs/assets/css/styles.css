@@ -5,18 +5,40 @@ body{
     background-color: #000;
   }
 
+  a {
+    color: #5fb1e0; /* Light color for contrast against black background */
+    text-decoration: none; /* Removes the default underline */
+}
+
+a:hover {
+    color: #ff7f50; /* Changes color when hovered over */
+    text-decoration: underline; /* Underlines when hovered over */
+}
+
+.tooltip2 {
+  z-index: 1000; /* Make sure it's on top of other elements */
+  position: absolute;
+  visibility: hidden;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 12px;
+  
+}
+
   .tooltip {
-    z-index: 1000; /* Make sure it's on top of other elements */
     position: absolute;
-    visibility: hidden;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 3px;
     text-align: center;
-    font-size: 12px;
-    
-  }
+    padding: 8px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    pointer-events: none; /* Tooltip should not interfere with other mouse events */
+}
+
 .custheader{
     text-align:center;
     background-color: #000;
@@ -34,6 +56,33 @@ body{
     font-weight: bold;
 }
 
+.intro{
+  display: flex;
+  flex-direction: row;
+}
+
+.image-container {
+  /*Images in 2 columns*/
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  margin: 0 auto;
+  max-width: 40%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.image-container img { 
+  max-width: 100%;
+  height: auto;
+}
+
+.image-container p {
+  text-align: center;
+}
   .section {
     padding-top: 0;
     margin: 7.5% 0;
@@ -127,13 +176,64 @@ input[type="checkbox"] {
 }
 
 label {
-    margin-right: 15px;
-    font-family: Arial, sans-serif;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.selectors-and-legend-container {
+display: flex;
+justify-content: space-between; /* Adjusts the space between the two divs */
+align-items: start; /* Aligns items to the start of the flex container */
+}
+
+#province-selectors {
+flex-grow: 1; /* Allows this div to grow and take up available space */
+margin-right: 20px; /* Adds some space between the selectors and the legend */
+}
+
+.legend-box {
+margin-top: 0;
+padding: 0;
+background-color: #f2f2f2; /* Light grey background */
+border: 1px solid #dcdcdc; /* Light grey border */
+border-radius: 5px;
+width: 15%;
+}
+
+.legend-box h4 {
+margin: 0;
+text-align: center; 
+}
+
+.legend-box p {
+margin: 0;
+font-size: smaller;
+}
+
+.legend-box span {
+font-weight: bold;
+}
+
+/* Hide the default checkbox */
+.emoji-checkbox {
+display: none;
+}
+
+/* Style for span when checkbox is not checked */
+.emoji-checkbox + span {
+font-size: smaller;
+color: black; /* default color */
+/* Add more styles if needed */
+}
+
+/* Style for span when checkbox is checked */
+.emoji-checkbox:checked + span {
+background-color: #ffdd62;
 }
 
 #province-selectors {
     flex-direction: column;
-    column-count: 7;
+    column-count: 6;
 }
 
 .flex-container {
@@ -174,6 +274,13 @@ label {
 .highlight {
   font-weight: bold;
   color: #700a0a; /* A deep blue, adjust as needed */
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.highlight-good {
+  font-weight: bold;
+  color: #02c40a; /* A deep blue, adjust as needed */
   font-size: 1.1em;
   font-weight: bold;
 }
@@ -225,7 +332,7 @@ p {
   
 .quadra-grid-container > * {
     margin: 10px; /* Adjust the margin as needed */
-    height: 300px; 
+    height: 100%; 
     max-width: 100%; /* Adjust the max-width as needed */
     overflow: hidden;
 }
