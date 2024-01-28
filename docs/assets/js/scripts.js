@@ -712,6 +712,7 @@ d3.csv("./merged_spain_data.csv", d => {
       console.log(top10Places);
 
       createBarChart0(top10Places, average);
+      createBarChartPositive(placesArray, average);
       createMiniBar(top10Places, average);
       //createBarChart2("bar", avgCrimeRatePerPlace);
       //createBarChart2("bar-mini", avgCrimeRatePerPlace);
@@ -1316,6 +1317,119 @@ const createBarChart0 = (data, lineValue) => {
     .attr("text-anchor", "end") // Align text to the right
     .style("font-size", "40px")
     .style("fill", "lightgrey") // Matching the line color or choose as needed
+    .text(`Country's Average: ${lineValue}`);
+
+
+
+    //Tooltip added
+    const sunTooltip = d3.select("bar-chart-tooltip")
+    .append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "5px")
+    .style("border-radius", "3px")
+    .style("text-align", "center")
+    .style("font-size", "12px");
+
+    svg.selectAll("path")
+      .on("mouseover", function(event, d) {
+        sunTooltip.html(`Crime Type: ${d.data.name}<br>Percentage: ${calculatePercentage(d.value, root.value)}<br>#Crimes: ${d.value}`)
+          .style("visibility", "visible");
+      })
+      .on("mousemove", function(event) {
+        sunTooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+      })
+      .on("mouseout", function() {
+        sunTooltip.style("visibility", "hidden");
+      });
+
+    
+
+
+  };
+
+  const createBarChartPositive = (data, lineValue) => {
+    const width = 1500, height = 1900;
+    const margins = { top: 0, right: 130, bottom: 450, left: 150 };
+    data = data.slice(-10);
+  
+    const svg = d3.select("#barBest")
+      .append("svg")
+      .attr("viewBox", [0, 0, width+400, height]);
+  
+    const xScale = d3.scaleBand()
+      .domain(data.map(d => d.Place))
+      .range([margins.left, width - margins.right])
+      .padding(0.2);
+  
+    const yScale = d3.scaleLinear()
+      .domain([0, 0.0017])
+      .range([height - margins.bottom, margins.top]);
+  
+    console.log("yScale domain:", yScale.domain());
+  
+    const yAxis = d3.axisLeft(yScale)
+    .ticks(8)
+    .tickSize(-width);
+  
+    const normalizedColorScale = d3.scaleSequential(d3.interpolateRgb("green","red"))
+      .domain([d3.min(data, d => d.avgPerCapita), 0.0015]);
+  
+    let bar = svg.append("g")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+      .attr("x", d => xScale(d.Place))
+      .attr("y", d => yScale(d.avgPerCapita))
+      .attr("width", d => xScale.bandwidth())
+      .attr("height", d => height - margins.bottom - yScale(d.avgPerCapita))
+      .attr("fill", d => normalizedColorScale(d.avgPerCapita));
+
+      const yGroup = svg.append("g")
+      .attr("transform", `translate(${margins.left}, 0)`)
+      .call(yAxis)
+      .call(g => g.select(".domain").remove());
+
+    // Customize tick labels (size, font weight, etc.)
+    yGroup.selectAll(".tick text")
+    .style("font-size", "40px") 
+    .style("fill", "#616161"); 
+
+    yGroup.selectAll(".tick line")
+    .style("stroke", "white"); // Makes tick lines black
+    
+    const xAxis = d3.axisBottom(xScale);
+  
+    const xGroup = svg.append("g")
+      .attr("transform", `translate(0, ${height - margins.bottom})`)
+      .call(xAxis);
+  
+    xGroup.selectAll("text")
+      .style("text-anchor", "end")
+      .style("fill", "#616161")
+      .attr("transform", "rotate(-45)")
+      .style("font-size", "60px")
+      .style("font-weight", "bold");
+
+    // Adding the horizontal line
+    svg.append("line")
+    .style("stroke", "#424242") // Line color
+    .style("stroke-width", 5) // Line width
+    .style("stroke-dasharray", "30")
+    .attr("x1", margins.left)
+    .attr("x2", width - margins.right+10)
+    .attr("y1", yScale(lineValue))
+    .attr("y2", yScale(lineValue));
+
+     // Adding label for the line
+    svg.append("text")
+    .attr("x", width + 340) // Positioning at the end of the line
+    .attr("y", yScale(lineValue) + 5) // Slightly above the line
+    .attr("text-anchor", "end") // Align text to the right
+    .style("font-size", "40px")
+    .style("fill", "#424242") // Matching the line color or choose as needed
     .text(`Country's Average: ${lineValue}`);
 
 
