@@ -32,17 +32,8 @@ svg.append("text")
     //.attr("transform", "rotate(-90, " + (width / 2) + ", " + (-height * 0.05) + ")") // Rotate the text vertically
     .text("Crime rates in Spain in the past years"); // Set the title text
 
-// Define a custom color scale
-var myColors = ["#1F0954", //Murders: dark blue
-"#CCFF66", //Sexual Assault: soft green
-"#123524", //Rape: dark green
-"#f1c232", //Thefts: dark yellow
-"#ffe599", //Burglaries: soft yellow
-"#FF0000", //Violent Street Robberies: red
-"#990000", //Violent Home Robberies: dark red
-"#660000", //Violent Establishment Robberies: dark red
-"#9D92F0"]; //Road Safety: red
-var color = d3.scaleOrdinal(myColors);
+// Define a color scale
+var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 // Define categories
 var categoriesToInclude = [
@@ -85,6 +76,13 @@ categoriesToInclude.forEach(category => {
     container.appendChild(label);
     container.appendChild(document.createElement('br'));
 });
+
+function getContainerDimensions(containerId) {
+  const container = document.getElementById(containerId);
+  const width = container.offsetWidth;
+  const height = container.offsetHeight;
+  return { width, height };
+}
 
 function computeCrimeRateLastYearPerProvince(data, selectedCategories, selectedProvinces) {
   var lastYear = d3.max(data, d => d.Year);
@@ -129,62 +127,59 @@ initialProvinces = ['Madrid', 'Barcelona', 'Murcia']
 
 // Create checkboxes for provinces
 // University data; https://www.universidades.gob.es/wp-content/uploads/2022/11/Datos_y_Cifras_2021_22.pdf
-// GDP per capita data: https://www.ine.es/prensa/cre_2022.pdf
-// Police data: https://www.newtral.es/numero-policias-espana-total-policia-nacional-guardia-civil/20211220/
-
 var provinceInfo = {
-  "Almería": { universities: 1, gdppc: 21464, police: 292.0},
-  "Cádiz": { universities: 5, gdppc: 18114, police: 292.0},
-  "Córdoba": { universities: 2, gdppc: 18838, police: 292.0},
-  "Granada": { universities: 4, gdppc: 18537, police: 292.0},
-  "Huelva": { universities: 1, gdppc: 20317, police: 292.0},
-  "Jaén": { universities: 2, gdppc: 18791, police: 292.0},
-  "Málaga": { universities: 4, gdppc: 18044, police: 292.0},
-  "Sevilla": { universities: 5, gdppc: 20859, police: 292.0},
-  "Huesca": { universities: 1, gdppc: 30295, police: 356.3},
-  "Teruel": { universities: 1, gdppc: 25827, police: 356.3},
-  "Zaragoza": { universities: 7, gdppc: 28679, police: 356.3},
-  "Asturias": { universities: 4, gdppc: 23369, police: 326.2},
-  "Balears (Illes)": { universities: 3, gdppc: 25420, police: 282.2},
-  "Palmas (Las)": { universities: 4, gdppc: 19506, police: 309.8},
-  "Santa Cruz de Tenerife": { universities: 1, gdppc: 19833, police: 309.8},
-  "Cantabria": { universities: 4, gdppc: 23988, police: 272.5},
-  "Albacete": { universities: 1, gdppc: 22438, police: 308.1},
-  "Ciudad Real": { universities: 2, gdppc: 22039, police: 308.1},
-  "Cuenca": { universities: 1, gdppc: 23383, police: 308.1},
-  "Guadalajara": { universities: 1, gdppc: 20608, police: 308.1},
-  "Toledo": { universities: 1, gdppc: 18641, police: 308.1},
-  "Ávila": { universities: 2, gdppc: 20750, police: 392.1},
-  "Burgos": { universities: 2, gdppc: 28942, police: 392.1},
-  "León": { universities: 3, gdppc: 22698, police: 392.1},
-  "Palencia": { universities: 1, gdppc: 27177, police: 392.1},
-  "Salamanca": { universities: 5, gdppc: 22337, police: 392.1},
-  "Segovia": { universities: 1, gdppc: 22519, police: 392.1},
-  "Soria": { universities: 1, gdppc: 28621, police: 392.1},
-  "Valladolid": { universities: 4, gdppc: 27595, police: 392.1},
-  "Zamora": { universities: 1, gdppc: 21277, police: 392.1},
-  "Barcelona": { universities: 18, gdppc: 30481, police: 85.4},
-  "Girona": { universities: 2, gdppc: 27127, police: 85.4},
-  "Lleida": { universities: 3, gdppc: 28598, police: 85.4},
-  "Tarragona": { universities: 2, gdppc: 29617, police: 85.4},
-  "Alicante": { universities: 5, gdppc: 19705, police: 258.2},
-  "Castellón/Castelló": { universities: 1, gdppc: 27452, police: 258.2},
-  "Valencia": { universities: 16, gdppc: 23647, police: 258.2},
-  "Badajoz": { universities: 3, gdppc: 19012, police: 355.3},
-  "Cáceres": { universities: 3, gdppc: 20354, police: 355.3},
-  "La Coruña": { universities: 6, gdppc: 24457, police: 283.5},
-  "Lugo": { universities: 1, gdppc: 22781, police: 283.5},
-  "Ourense": { universities: 2, gdppc: 23357, police: 283.5},
-  "Pontevedra": { universities: 2, gdppc: 23279, police: 283.5},
-  "Madrid": { universities: 22, gdppc: 35380, police: 553.6},
-  "Murcia": { universities: 4, gdppc: 21482, police: 222.8},
-  "Navarra": { universities: 5, gdppc: 31042, police: 333.1},
-  "Araba/Áraba": { universities: 2, gdppc: 38829, police: 159.2},
-  "Vizcaya": { universities: 10, gdppc: 30848, police: 159.2},
-  "Gipuzkoa": { universities: 3, gdppc: 32971, police: 159.2},
-  "Rioja (La)": { universities: 1, gdppc: 26977, police: 454.8},
-  "Ceuta": { universities: 0, gdppc: 21228, police: 1275.4},
-  "Melilla": { universities: 0, gdppc: 18819, police: 1294.9}
+  "Almería": { universities: 1 },
+  "Cádiz": { universities: 5 },
+  "Córdoba": { universities: 2 },
+  "Granada": { universities: 4 },
+  "Huelva": { universities: 1 },
+  "Jaén": { universities: 2 },
+  "Málaga": { universities: 4 },
+  "Sevilla": { universities: 5 },
+  "Huesca": { universities: 1 },
+  "Teruel": { universities: 1 },
+  "Zaragoza": { universities: 7 },
+  "Asturias": { universities: 4 }, // Oviedo is the capital of Asturias, hence no province is listed
+  "Balears (Illes)": { universities: 3 },
+  "Palmas (Las)": { universities: 4 },
+  "Santa Cruz de Tenerife": { universities: 1 },
+  "Cantabria": { universities: 4 }, // Santander is the capital of Cantabria, hence no province is listed
+  "Albacete": { universities: 1 },
+  "Ciudad Real": { universities: 2 },
+  "Cuenca": { universities: 1 },
+  "Guadalajara": { universities: 1 },
+  "Toledo": { universities: 1 },
+  "Ávila": { universities: 2 },
+  "Burgos": { universities: 2 },
+  "León": { universities: 3 },
+  "Palencia": { universities: 1 },
+  "Salamanca": { universities: 5 },
+  "Segovia": { universities: 1 },
+  "Soria": { universities: 1 },
+  "Valladolid": { universities: 4 },
+  "Zamora": { universities: 1 },
+  "Barcelona": { universities: 18 },
+  "Girona": { universities: 2 },
+  "Lleida": { universities: 3 },
+  "Tarragona": { universities: 2 },
+  "Alicante": { universities: 5 },
+  "Castellón/Castelló": { universities: 1 },
+  "Valencia": { universities: 16 },
+  "Badajoz": { universities: 3 },
+  "Cáceres": { universities: 3 },
+  "La Coruña": { universities: 6 },
+  "Lugo": { universities: 1 },
+  "Ourense": { universities: 2 },
+  "Pontevedra": { universities: 2 },
+  "Madrid": { universities: 22 }, 
+  "Murcia": { universities: 4 }, 
+  "Navarra": { universities: 5 }, 
+  "Araba/Áraba": { universities: 2 },
+  "Vizcaya": { universities: 10 },
+  "Gipuzkoa": { universities: 3 },
+  "Rioja (La)": { universities: 1 },
+  "Ceuta": { universities: 0},
+  "Melilla": { universities: 0}
 };
 
 
@@ -192,33 +187,6 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-function generateProvinceText(province, showPopulation, showUniversities, showGDP, showPolice) {
-  var provinceText = province;
-  var info = provinceInfo[province];
-  
-  if (!info) {
-      console.warn("No data found for province:", province);
-      return provinceText;
-  }
-
-  var population = data.find(d => d.Place == province && d.Year.getFullYear() == 2022).Population;
-
-  if (showPopulation && population > 1000000) {
-      provinceText += " 🏙️";
-  }
-  if (showUniversities && info.universities > 3) {
-      provinceText += " 📚";
-  }
-  if (showGDP && info.gdppc > 30000) {
-      provinceText += " 💰";
-  }
-  if (showPolice && info.police > 400) {
-      provinceText += " 👮";
-  }
-
-  return provinceText;
-}
-  
 
 provinces.forEach(province => {
   var checkbox = document.createElement('input');
@@ -230,11 +198,7 @@ provinces.forEach(province => {
 
   var label = document.createElement('label');
   label.htmlFor = province;
-  
-  // Add emojis based on conditions
-  var provinceText = generateProvinceText(province, true, true, true, true);
-
-  label.appendChild(document.createTextNode(provinceText));
+  label.appendChild(document.createTextNode(province));
 
   var container = document.getElementById('province-selectors');
   container.appendChild(checkbox);
@@ -250,7 +214,9 @@ provinces.forEach(province => {
         population = data.find(d => d.Place == province && d.Year.getFullYear() == 2022).Population;
         tooltip.html("Population: " + population + "<br/>" +
                     "Universities: " + provinceInfo[province].universities + "<br/>" +
-                    "GDP per capita: " + provinceInfo[province].gdppc + "€" + "<br/>")
+                    /*"PIB per Capita: " + provinceInfo[province].pibPerCapita + "<br/>" +
+                    /* Other stats */
+                    "")
             .style("left", (event.pageX) + "px")
             .style("top", (event.pageY - 28) + "px");
     })
@@ -358,31 +324,24 @@ function drawCategoryLines(aggregatedData, line) {
 }
 
 // Function to compute the most dangerous provinces
-// Returns a map with the top n provinces and their crime rate, also the top n provinces with lowest crime rate, the rest are averaged
-// For example, if n = 2, the map will contain 4 provinces: the 2 most dangerous, the 2 least dangerous and the average of the rest
+// Returns a map with the top n provinces and their crime rate, and the rest of the provinces grouped in "Rest", with their average crime rate
 function mostDangerousProvinces(crimeRatePerProvince, n=2) {
-    if (crimeRatePerProvince.size <= 2*n) { // If there are less than 2*n provinces, return all of them sorted by crime rate
-        return Array.from(crimeRatePerProvince, ([province, crimeRate]) => ({ province, crimeRate })).sort((a, b) => b.crimeRate - a.crimeRate);
-    }
-    // Else, we compute the top n provinces and the bottom n provinces, and average the rest
     var sortedProvinces = Array.from(crimeRatePerProvince, ([province, crimeRate]) => ({ province, crimeRate })).sort((a, b) => b.crimeRate - a.crimeRate);
     var topNProvinces = sortedProvinces.slice(0, n);
-    var leastNProvinces = sortedProvinces.slice(-n);
-    var otherProvinces = sortedProvinces.slice(n, -n);
+    var otherProvinces = sortedProvinces.slice(n);
     var averageCrimeRate = d3.mean(otherProvinces, d => d.crimeRate);
 
-    all = topNProvinces.concat(leastNProvinces);
-
-    // If there are no other provinces, return all
+    // If there are no other provinces, return the top n provinces
     if (otherProvinces.length == 0) {
-        return all;
+        return topNProvinces;
     }
 
+    var otherProvincesMap = new Map();
+    otherProvinces.forEach(d => otherProvincesMap.set(d.province, averageCrimeRate));
     topNProvinces.push({province: "Rest", crimeRate: averageCrimeRate});
-    return topNProvinces.concat(leastNProvinces);
+    console.log("Top N Provinces:", topNProvinces);
+    return topNProvinces;
 }
-
-
 
 // Function to handle text wrapping (split text into multiple lines if it exceeds the specified width)
 function wrapText(text, width) {
@@ -488,19 +447,15 @@ function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
 
     console.log("Series:", series);
 
-    var colors = ["#7e3a3a", // Worst: red
-      "#FF7276", // Bad: soft red
-      "#FFFFFF", // Average: white
-      "#D9EAD3", // Good: soft green
-      "#66CA3B"]; // Best: green
+    var colors = ["#BAE3F2", "#C9F2EB", "#E6FCED"]; 
 
     var yScaleStacked = d3.scaleLinear()
         .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
         .range([height, 0]);
 
     var xScaleStacked = d3.scaleBand()
-        .domain(["crimeRate"]) // Only one bar
-        .range([width, width/100*115]) // Adjust the width of the bars
+        .domain(["crimeRate"])
+        .range([width, width/10*11])
         .padding(0.1);
 
     var color = d3.scaleOrdinal()
@@ -543,12 +498,12 @@ function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
 
     // Add title
     svg.append("text")
-        .attr("x", width + margin.right/2.5)
+        .attr("x", width + margin.right/3)
         .attr("y", -margin.top/1.5)
         .attr("text-anchor", "middle")
         .attr("font-size", "14px")
         .attr("font-weight", "bold")
-        .text("Crime rates summary");
+        .text("Most dangerous provinces");
 
     // Add subtitle
     svg.append("text")
@@ -573,7 +528,6 @@ function updateChart() {
     svg.selectAll("path").remove();
     svg.selectAll(".legend").remove();
     svg.selectAll("g").remove();
-    svg.selectAll("text").remove();
 
     // Redraw lines and legend
     const {xScale, yScale, xAxis, yAxis, line} = createScales(filteredData);
@@ -601,35 +555,6 @@ document.getElementById("deselect-all-provinces").addEventListener("click", func
     });
     updateChart();
 });
-
-document.getElementById("emoji-population").addEventListener("change", function() {
-  toggleEmojiDisplay();
-});
-
-document.getElementById("emoji-universities").addEventListener("change", function() {
-  toggleEmojiDisplay();
-});
-
-document.getElementById("emoji-gdp").addEventListener("change", function() {
-  toggleEmojiDisplay();
-});
-
-document.getElementById("emoji-police").addEventListener("change", function() {
-  toggleEmojiDisplay();
-});
-
-function toggleEmojiDisplay(emoji) {
-  var showPopulation = document.getElementById("emoji-population").checked;
-  var showUniversities = document.getElementById("emoji-universities").checked;
-  var showGDP = document.getElementById("emoji-gdp").checked;
-  var showPolice = document.getElementById("emoji-police").checked;
-
-  d3.selectAll("#province-selectors label").text(function() {
-      var province = this.innerText.replace(" 🏙️", "").replace(" 📚", "").replace(" 💰", "").replace(" 👮", "");
-      return generateProvinceText(province, showPopulation, showUniversities, showGDP, showPolice);
-  }
-  );
-}
 
 })
 
@@ -662,14 +587,18 @@ function add_population(data){
   return data;
 }
 
-d3.csv("./spain_tidy_subcategories.csv", d => {
+//-----------------------------------------
+
+d3.csv("./merged_spain_data.csv", d => {
     return {
         Place: d.Place,
         Category: d.Category,
         SubCategory: d.SubCategory,
         Year: +d.Year,
         Amount: +d.Amount,
-        Population: 0,
+        Population: +d.Population,
+        PerCapita: +d.PerCapita,
+        avgPerCapita: +d.avgPerCapita,
         date: parseTime(d.Year)
     }
   }).then(data => {
@@ -757,10 +686,35 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
 
   
       //Plot Sunburst
+      //createSunburstChartZoomable2(transformedData);
       createSunburstChartZoomable2(transformedData);
+      createMiniSunburstChart(transformedData);
+      //createSunburstChartZoomable("sunburst-container-mini", transformedData,100,100);
       
       // Plot the bar chart
-      createBarChart(avgCrimeRatePerPlace);
+       // Group the data by Place and calculate the average avgPerCapita for each place
+      const placesData = d3.rollup(data, i => d3.min(i, data => data.avgPerCapita), data => data.Place)
+ 
+      // Sort the places in descending order of avgPerCapita
+      // Sort the placesData in descending order of the minimum avgPerCapita values
+      // Convert the placesData Map into an array of objects
+      const placesArray = Array.from(placesData, ([Place, avgPerCapita]) => ({ Place, avgPerCapita }));
+
+      // Sort the placesArray in descending order of the minimum avgPerCapita values
+      placesArray.sort((a, b) => b.avgPerCapita - a.avgPerCapita);
+      const totalSum = placesArray.reduce((sum, place) => sum + place.avgPerCapita, 0);
+      const average = (totalSum / placesArray.length).toFixed(5);
+
+      // Take the top 10 places
+      const top10Places = placesArray.slice(0, 10);
+
+      // Now, top10Places contains the top 10 places with the highest avgPerCapita values
+      console.log(top10Places);
+
+      createBarChart0(top10Places, average);
+      createMiniBar(top10Places, average);
+      //createBarChart2("bar", avgCrimeRatePerPlace);
+      //createBarChart2("bar-mini", avgCrimeRatePerPlace);
 
       createPieChart(80.4, '.pie-chart-container');
   
@@ -776,10 +730,11 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
         this.classList.add('clicked');
       
         // Start sunburst spin animation
-        document.getElementById('sunburst-container').style.animation = 'spin 3s linear';
+        document.getElementById('sunburst-container-mini').style.animation = 'spin 3s linear';
+
       
         // Select all bars and apply the color change
-        var bars = document.querySelectorAll('#bar rect');
+        var bars = document.querySelectorAll('#bar-mini rect');
       
         // Store the original colors
         var originalColors = Array.from(bars, bar => bar.style.fill);
@@ -802,7 +757,7 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
         // Reset animations after 3 seconds
         setTimeout(function () {
           document.getElementById('testButton').classList.remove('clicked');
-          document.getElementById('sunburst-container').style.animation = '';
+          document.getElementById('sunburst-container-mini').style.animation = '';
       
           // Stop the color-changing interval
           clearInterval(interval);
@@ -831,34 +786,83 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       }
 
       function displayLuckResult() {
-        const overlay = document.getElementById("overlay");
+        const popup = document.getElementById("overlay");
       
+        // Define the probabilities for each crime type
+        const probabilities = {
+          "Spanish Lottery": 0.169433065,
+          "Patrimony Crime": 50.57163849,
+          "Collective Crime": 9.762321841,
+          "Freedom Crime": 15.93587457,
+          "Sexual Crime": 0.776459923,
+          "Individual Crime": 19.99466611,
+          "Family Crime": 2.789606007,
+        };
+
         // Get a random value between 0 and 1
         const randomValue = Math.random();
-      
-        // Use probabilities to determine which image to display
-        let imageUrl;
-        if (randomValue < 0.4) {
-          imageUrl = "assets/Rullet/lottery_luck.gif";
-        } else if (randomValue >= 0.4 && randomValue < 0.7) {
-          imageUrl = "assets/Rullet/patrimony_luck.gif";
+
+        // Determine which crime type to display based on probabilities
+        let crimeType;
+        if (randomValue < probabilities["Spanish Lottery"] / 100) {
+          crimeType = "Spanish Lottery";
+        } else if (randomValue < (probabilities["Spanish Lottery"] + probabilities["Patrimony Crime"]) / 100) {
+          crimeType = "Patrimony Crime";
+        } else if (randomValue < (probabilities["Spanish Lottery"] + probabilities["Patrimony Crime"] + probabilities["Collective Crime"]) / 100) {
+          crimeType = "Collective Crime";
+        } else if (randomValue < (probabilities["Spanish Lottery"] + probabilities["Patrimony Crime"] + probabilities["Collective Crime"] + probabilities["Freedom Crime"]) / 100) {
+          crimeType = "Freedom Crime";
+        } else if (randomValue < (probabilities["Spanish Lottery"] + probabilities["Patrimony Crime"] + probabilities["Collective Crime"] + probabilities["Freedom Crime"] + probabilities["Sexual Crime"]) / 100) {
+          crimeType = "Sexual Crime";
+        } else if (randomValue < (probabilities["Spanish Lottery"] + probabilities["Patrimony Crime"] + probabilities["Collective Crime"] + probabilities["Freedom Crime"] + probabilities["Sexual Crime"] + probabilities["Individual Crime"]) / 100) {
+          crimeType = "Individual Crime";
         } else {
-          imageUrl = "assets/Rullet/safe_luck.png";
+          crimeType = "Family Crime";
         }
+
+        // Determine the image URL based on the selected crime type
+        let imageUrl;
+        switch (crimeType) {
+          case "Patrimony Crime":
+            imageUrl = "assets/Rullet/patrimony_luck.gif";
+            break;
+          case "Collective Crime":
+            imageUrl = "assets/Rullet/collective_luck.gif";
+            break;
+          case "Freedom Crime":
+            imageUrl = "assets/Rullet/freedom_luck.gif";
+            break;
+          case "Sexual Crime":
+            imageUrl = "assets/Rullet/sx_luck.gif";
+            break;
+          case "Individual Crime":
+            imageUrl = "assets/Rullet/individual_luck.gif";
+            break;
+          case "Family Crime":
+            imageUrl = "assets/Rullet/family_luck.gif";
+            break;
+          case "Lottery":
+            imageUrl = "assets/Rullet/lottery_luck.gif";
+            break;
+        }
+
       
-        // Display the selected image in the overlay
+        // Display the selected image in the popup
         const imageElement = document.createElement("img");
         imageElement.src = imageUrl;
-        overlay.innerHTML = "";
-        overlay.appendChild(imageElement);
-        
+        popup.innerHTML = "";
+        popup.appendChild(imageElement);
       
-        // Show the overlay
-        overlay.style.display = "flex";
+        // Show the popup
+        popup.style.display = "flex";
       }
       
       // Add an event listener to close the overlay when clicked
       document.getElementById("overlay").addEventListener("click", function () {
+        this.style.display = "none";
+      });
+
+      document.getElementById("probabilitiesPopup").addEventListener("click", function () {
         this.style.display = "none";
       });
       
@@ -868,8 +872,194 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
   function calculatePercentage(value, total) {
     return ((value / total) * 100).toFixed(2) + "%";
   }
+/*
+  function createMiniSunburstChart2(data){
+    const width = 100, height = 100;
+    const radius = Math.min(width, height) / 2; // Ensuring the radius fits within the SVG
 
-  function createSunburstChartZoomable2(data){
+    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateSinebow, data.children.length + 1));
+
+    // Compute the layout.
+    const hierarchy = d3.hierarchy(data)
+      .sum(d => d.value)
+      .sort((a, b) => b.value - a.value);
+    const root = d3.partition()
+      .size([2 * Math.PI, hierarchy.height + 1])
+      (hierarchy);
+    root.each(d => d.current = d);
+
+    // Create the SVG container.
+    const svg = d3.select("#sunburst-container-mini")
+      .append("svg")
+      .attr("width", width/2)
+      .attr("height", height/2)
+      .append("g")
+      .attr("transform", `translate(${width / 2},${height / 2})`); // Centering the chart
+
+    // Create the arc generator.
+    const arc = d3.arc()
+      .startAngle(d => d.x0)
+      .endAngle(d => d.x1)
+      .padAngle(0.005)
+      .padRadius(radius)
+      .innerRadius(d => d.y0 * radius/2)
+      .outerRadius(d => d.y1 * radius/2);
+
+    // Append the arcs.
+    svg.selectAll("path")
+      .data(root.descendants().slice(1))
+      .join("path")
+      .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+      .attr("d", d => arc(d.current));
+
+ 
+}
+*/
+function createMiniSunburstChart(data){
+  const width = 900, height = 900;
+
+  // Specify the chart’s colors and approximate radius (it will be adjusted at the end).
+  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateSinebow, data.children.length + 1));
+  //const color = d3.scaleOrdinal(d3.schemeSet1); // You can use other color schemes as well
+
+  const radius = 165/2;
+
+  // Compute the layout.
+  const hierarchy = d3.hierarchy(data)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+  const root = d3.partition()
+    .size([2 * Math.PI, hierarchy.height + 1])
+    (hierarchy);
+  root.each(d => d.current = d);
+
+  // Create the arc generator.
+  const arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+    .padRadius(radius)
+    .innerRadius(d => d.y0 * radius)
+    .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+
+  // Create the SVG container.
+  const svg = d3.select("#sunburst-container-mini")
+    .append("svg")
+    .attr("viewBox", [0, 0, width, height])
+    .append("g")
+    .attr("transform", `translate(${width / 2},${height / 2})`);
+
+  // Append the arcs.
+  const path = svg.append("g")
+    .selectAll("path")
+    .data(root.descendants().slice(1))
+    .join("path")
+    .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+    .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 1 : 0.6) : 0)
+    .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
+    .attr("d", d => arc(d.current))
+    .on("click", clicked);
+
+  // Make them clickable if they have children.
+  path.filter(d => d.children)
+    .style("cursor", "pointer");
+
+  const format = d3.format(",d");
+  path.append("title")
+    .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
+/*
+  const label = svg.append("g")
+    .attr("pointer-events", "none")
+    .attr("text-anchor", "middle")
+    .attr("font-size", 7)
+    .attr("fill", "black")
+    .style("font-weight", "bold")
+    .style("user-select", "none")
+    .selectAll("text")
+    .data(root.descendants().slice(1))
+    .join("text")
+    .attr("dy", "0.35em")
+    .attr("fill-opacity", d => +labelVisible(d.current))
+    .attr("transform", d => labelTransform(d.current))
+    .text(d => {
+      const percentage = calculatePercentage(d.value, root.value);
+      return `${d.data.name} (${percentage})`;
+    });
+  */
+
+  const parent = svg.append("circle")
+    .datum(root)
+    .attr("r", radius)
+    .attr("fill", "none")
+    .attr("pointer-events", "all")
+    .on("click", clicked);
+
+
+  // Handle zoom on click.
+  function clicked(event, p) {
+    parent.datum(p.parent || root);
+
+    root.each(d => d.target = {
+      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      y0: Math.max(0, d.y0 - p.depth),
+      y1: Math.max(0, d.y1 - p.depth)
+    });
+
+    const t = svg.transition().duration(750);
+
+    // Transition the data on all arcs
+    path.transition(t)
+      .tween("data", d => {
+        const i = d3.interpolate(d.current, d.target);
+        return t => d.current = i(t);
+      })
+      .filter(function (d) {
+        return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+      })
+      .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.9 : 0.6) : 0)
+      .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
+      .attrTween("d", d => () => arc(d.current));
+
+    // Transition the labels
+    label.filter(function (d) {
+      return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+    }).transition(t)
+      .attr("fill-opacity", d => +labelVisible(d.target))
+      .attrTween("transform", d => () => labelTransform(d.current));
+
+    // Show or hide the nameLabel based on whether there are children (subcategories) or parent
+    nameLabel.transition().duration(750)
+      .text(p.parent ? p.data.name : "")
+      .attr("fill", color(p.data.name))
+      .attr("opacity", p.parent ? 1 : 0);
+
+    // Calculate the percentage for the clicked section
+    const percentage = calculatePercentage(p.value, root.value);
+
+    // Update the nameLabel text with the name and percentage
+    nameLabel.transition().duration(750)
+      .text(p.parent ? `${p.data.name} (${percentage})` : "")
+      .attr("fill", color(p.data.name))
+      .attr("opacity", p.parent ? 1 : 0);
+  }
+
+  function arcVisible(d) {
+    return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+  }
+
+  function labelVisible(d) {
+    return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+  }
+
+  function labelTransform(d) {
+    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+    const y = (d.y0 + d.y1) / 2 * radius;
+    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+  }
+}
+
+function createSunburstChartZoomable2(data){
     const width = 1000, height = 1000;
     const imageUrl = "assets/images/map.png";
   
@@ -904,22 +1094,13 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .append("g")
       .attr("transform", `translate(${width / 2},${height / 2})`);
   
-    // Add the "Spain" label in the middle
-      svg.append("text")
-      .attr("text-anchor", "middle")
-      .attr("dy", "-3.5em")
-      .style("font-size", "30px")
-      .style("font-weight", "bold")
-      .style("color", "white")
-      .text("Spain");
-  
     // Append the arcs.
     const path = svg.append("g")
       .selectAll("path")
       .data(root.descendants().slice(1))
       .join("path")
       .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-      .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
+      .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.8 : 0.5) : 0)
       .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
       .attr("d", d => arc(d.current))
       .on("click", clicked);
@@ -929,13 +1110,14 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .style("cursor", "pointer");
   
     const format = d3.format(",d");
-    path.append("title")
+    /*path.append("title")
       .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
-  
+  */
     const label = svg.append("g")
       .attr("pointer-events", "none")
       .attr("text-anchor", "middle")
-      .attr("font-size", 14)
+      .attr("font-size", 18)
+      .attr("font-family", "Arial, sans-serif") // Example of a sans-serif font
       .attr("fill", "black")
       .style("font-weight", "bold")
       .style("user-select", "none")
@@ -945,10 +1127,33 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .attr("dy", "0.35em")
       .attr("fill-opacity", d => +labelVisible(d.current))
       .attr("transform", d => labelTransform(d.current))
-      .text(d => {
-        const percentage = calculatePercentage(d.value, root.value);
-        return `${d.data.name} (${percentage})`;
+      .text(d => d.data.name);
+
+      //Tooltip added
+  
+      const sunTooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("visibility", "hidden")
+      .style("background", "#fff")
+      .style("border", "1px solid #ccc")
+      .style("padding", "5px")
+      .style("border-radius", "3px")
+      .style("text-align", "center")
+      .style("font-size", "12px");
+
+    svg.selectAll("path")
+      .on("mouseover", function(event, d) {
+        sunTooltip.html(`Crime Type: ${d.data.name}<br>Percentage: ${calculatePercentage(d.value, root.value)}<br>#Crimes: ${d.value}`)
+          .style("visibility", "visible");
+      })
+      .on("mousemove", function(event) {
+        sunTooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+      })
+      .on("mouseout", function() {
+        sunTooltip.style("visibility", "hidden");
       });
+      
     
   
     const parent = svg.append("circle")
@@ -961,7 +1166,7 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
     const nameLabel = svg.append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "-18em")
-      .attr("font-size", 20)
+      .attr("font-size", 30)
       .attr("fill", "black");
   
   
@@ -987,7 +1192,7 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
         .filter(function (d) {
           return +this.getAttribute("fill-opacity") || arcVisible(d.target);
         })
-        .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+        .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.9 : 0.6) : 0)
         .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
         .attrTween("d", d => () => arc(d.current));
   
@@ -1028,22 +1233,18 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
     }
   
-    //Image
-    svg.append("image")
-      .attr("xlink:href", imageUrl)
-      .attr("width", 250)
-      .attr("height", 250)
-      .attr("x", -120)
-      .attr("y", -120);
   }
 
-  const createBarChart = (data) => {
-    const width = 1000, height = 1000;
-    const margins = { top: 10, right: 30, bottom: 140, left: 50 };
+
+
+
+const createBarChart0 = (data, lineValue) => {
+    const width = 1500, height = 1900;
+    const margins = { top: 0, right: 130, bottom: 450, left: 150 };
   
     const svg = d3.select("#bar")
       .append("svg")
-      .attr("viewBox", [0, -50, width+100, height]);
+      .attr("viewBox", [0, 0, width+400, height]);
   
     const xScale = d3.scaleBand()
       .domain(data.map(d => d.Place))
@@ -1051,45 +1252,41 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .padding(0.2);
   
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.Amount)])
+      .domain([0, d3.max(data, d => d.avgPerCapita)*1.1])
       .range([height - margins.bottom, margins.top]);
   
     console.log("yScale domain:", yScale.domain());
   
     const yAxis = d3.axisLeft(yScale)
-      .tickFormat(d3.format(".2s"));
+    .ticks(8)
+    .tickSize(-width);
   
-    const yGroup = svg.append("g")
-      .attr("transform", `translate(${margins.left}, 0)`)
-      .call(yAxis)
-      .call(g => g.select(".domain").remove());
-  
-    const normalizedColorScale = d3.scaleSequential(d3.interpolateRgb("white","red"))
-      .domain([0, d3.max(data, d => d.Amount)/2]);
+    const normalizedColorScale = d3.scaleSequential(d3.interpolateRgb("#ffc4c4","#b80202"))
+      .domain([d3.min(data, d => d.avgPerCapita)*0.95, d3.max(data, d => d.avgPerCapita)]);
   
     let bar = svg.append("g")
       .selectAll("rect")
       .data(data)
       .join("rect")
       .attr("x", d => xScale(d.Place))
-      .attr("y", d => yScale(d.Amount))
+      .attr("y", d => yScale(d.avgPerCapita))
       .attr("width", d => xScale.bandwidth())
-      .attr("height", d => height - margins.bottom - yScale(d.Amount))
-      .attr("fill", d => normalizedColorScale(d.Amount));
-  
-    svg.append("g")
-      .selectAll("text")
-      .data(data)
-      .join("text")
-      .text(d => d.Amount)
-      .attr("x", d => xScale(d.Place) + xScale.bandwidth() + 30)
-      .attr("y", d => yScale(d.Amount) - 15)
-      .attr("dy", "1em")
-      .attr("text-anchor", "middle")
-      .style("font-size", "12px")
-      .style("fill", d => normalizedColorScale(d.Amount))
-      .attr("transform", d => `rotate(-65 ${xScale(d.Place) + xScale.bandwidth() / 2},${yScale(d.Amount)})`);
-  
+      .attr("height", d => height - margins.bottom - yScale(d.avgPerCapita))
+      .attr("fill", d => normalizedColorScale(d.avgPerCapita));
+
+      const yGroup = svg.append("g")
+      .attr("transform", `translate(${margins.left}, 0)`)
+      .call(yAxis)
+      .call(g => g.select(".domain").remove());
+
+    // Customize tick labels (size, font weight, etc.)
+    yGroup.selectAll(".tick text")
+    .style("font-size", "40px") 
+    .style("fill", "grey"); 
+
+    yGroup.selectAll(".tick line")
+    .style("stroke", "black"); // Makes tick lines black
+    
     const xAxis = d3.axisBottom(xScale);
   
     const xGroup = svg.append("g")
@@ -1098,12 +1295,95 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
   
     xGroup.selectAll("text")
       .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)")
-      .style("font-size", "12px")
+      .style("fill", "#ababab")
+      .attr("transform", "rotate(-45)")
+      .style("font-size", "60px")
       .style("font-weight", "bold");
+
+    // Adding the horizontal line
+    svg.append("line")
+    .style("stroke", "white") // Line color
+    .style("stroke-width", 4) // Line width
+    .style("stroke-dasharray", "40")
+    .attr("x1", margins.left)
+    .attr("x2", width - margins.right+10)
+    .attr("y1", yScale(lineValue))
+    .attr("y2", yScale(lineValue));
+
+     // Adding label for the line
+    svg.append("text")
+    .attr("x", width + 340) // Positioning at the end of the line
+    .attr("y", yScale(lineValue) + 5) // Slightly above the line
+    .attr("text-anchor", "end") // Align text to the right
+    .style("font-size", "40px")
+    .style("fill", "lightgrey") // Matching the line color or choose as needed
+    .text(`Country's Average: ${lineValue}`);
+
+    
+
+
   };
+
+  const createMiniBar = (data, lineValue) => {
+    const width = 700, height = 700;
+    const margins = { top: 15, right: 13, bottom: 35, left: 50 };
+  
+    const svg = d3.select("#bar-mini")
+      .append("svg")
+      .attr("viewBox", [0, -50, width+400, height]);
+  
+    const xScale = d3.scaleBand()
+      .domain(data.map(d => d.Place))
+      .range([margins.left, width - margins.right])
+      .padding(0.2);
+  
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.avgPerCapita)*1.1])
+      .range([height - margins.bottom, margins.top]);
+  
+    console.log("yScale domain:", yScale.domain());
+  
+    const yAxis = d3.axisLeft(yScale)
+    .ticks(8)
+    .tickSize(-width);
+  
+    const normalizedColorScale = d3.scaleSequential(d3.interpolateRgb("#ffc4c4","#b80202"))
+      .domain([d3.min(data, d => d.avgPerCapita)*0.95, d3.max(data, d => d.avgPerCapita)]);
+  
+    let bar = svg.append("g")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+      .attr("x", d => xScale(d.Place))
+      .attr("y", d => yScale(d.avgPerCapita))
+      .attr("width", d => xScale.bandwidth())
+      .attr("height", d => height - margins.bottom - yScale(d.avgPerCapita))
+      .attr("fill", d => normalizedColorScale(d.avgPerCapita));
+  
+      const yGroup = svg.append("g")
+      .attr("transform", `translate(${margins.left}, 0)`)
+      .call(yAxis)
+      .call(g => g.select(".domain").remove());
+
+    const xAxis = d3.axisBottom(xScale);
+  
+    const xGroup = svg.append("g")
+      .attr("transform", `translate(0, ${height - margins.bottom})`)
+      .call(xAxis);
+
+
+    // Adding the horizontal line
+    svg.append("line")
+    .style("stroke", "white") // Line color
+    .style("stroke-width", 6) // Line width
+    .attr("x1", margins.left)
+    .attr("x2", width - margins.right+10)
+    .attr("y1", yScale(lineValue))
+    .attr("y2", yScale(lineValue));
+
+  };
+
+ 
   
   function createPieChart(percentage, containerSelector) {
     const data = [percentage, 100 - percentage];
@@ -1183,3 +1463,15 @@ d3.csv("./spain_tidy_subcategories.csv", d => {
       .attr('fill', 'white')
       .text(d => `${d.data.toFixed(1)}%`);
   }  
+
+  // Function to show the pop-up
+function showProbabilities() {
+  const popup = document.getElementById("probabilitiesPopup");
+  popup.style.display = "block";
+}
+
+// You can also add a function to close the pop-up if needed
+function closeProbabilitiesPopup() {
+  const popup = document.getElementById("probabilitiesPopup");
+  popup.style.display = "none";
+}

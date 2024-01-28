@@ -1,9 +1,11 @@
 const sectionBackgrounds = {
+    "section0": "#000000",
     "section1": "#000000",
     "section2": "#000000",
     "section3": "#000000",
     "section4": "#FFFFFF",
     "section5": "#FFFFFF",
+    "section6": "#FFFFFF"
 };
 
 

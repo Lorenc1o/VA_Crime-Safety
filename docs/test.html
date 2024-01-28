@@ -9,41 +9,130 @@
 <body>
   <div class="custheader">
 		Crime and Safety: Moving to Spain?
+    <hr style="width: 78%; margin: 0 auto; border: 1.5px solid #700a0a;">
   </div>
 
     <div class="navigation-menu">
+        <div class="nav-circle" data-target="section0"></div>
         <div class="nav-circle" data-target="section1"></div>
         <div class="nav-circle" data-target="section2"></div>
+        <div class="nav-circle" data-target="section2.5"></div>
         <div class="nav-circle" data-target="section3"></div>
         <div class="nav-circle" data-target="section4"></div>
         <div class="nav-circle" data-target="section5"></div>
     </div>
 
-    <div id="section1" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+    <div id="section0" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      
         <h2 style="text-align:center; color: whitesmoke;">Spain as a Country</h3>
-    
-        <hr style="width: 78%; margin: 0 auto; border: 2px solid #700a0a;">
-    
-        <div style="text-align:center">
-            <p>Facing a crime or winning the lottery?</p>
-            <button id="testButton" class="nice-button">Test Your Luck!</button>
-            <div id="result-container"></div>
-            <div id="overlay" class="overlay"></div>
+        <p>Section0 -- Brief intro? </p>
+    </div>
+
+    <div id="section1" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <div class="flex-container">
+          <div id="bar" class="responsive-svg-container">
+            <h3 style="text-align:center; color: whitesmoke;">Provinces with Highest Crime per Capita [2010-2022]</h3>
+          </div>
+          <div id="bar-chart-tooltip" class="tooltip" style="position: absolute; visibility: hidden; background-color: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left; font-size: 12px;"></div>
+          <div>
+            <p style="color: lightgray; font-size: 20px; font-weight: bold;"> About the provinces...</p>
+            <div class="info-container">
+              <p><span class="highlight">Balears</span> is known for its four largest islands: Mallorca, Menorca, Ibiza, and Formentera.</p>
+              <p><span class="highlight">Barcelona</span> and <span class="highlight">Madrid</span> are the most populated provinces in Spain.</p>
+              <p><span class="highlight">Girona</span> and <span class="highlight">Tarragona</span> are neighboring provinces of Barcelona, mostly known by tourists for their Roman ruins.</p>
+              <p><span class="highlight">Ceuta</span> and <span class="highlight">Melilla</span> are the only Spanish cities in Africa, being autonomous territories.</p>
+              <p><span class="highlight">Málaga</span> is the only province in Andalucia in this list.</p>
+              <p><span class="highlight">Alicante</span> and <span class="highlight">Valencia</span>.</p>
+            </div>
+          </div>
+          
         </div>
 
-        <div>
-          <div id="bar" class="responsive-svg-container"></div>
-          <h3 style="text-align:center; color: whitesmoke;">Crimes per Province [2010-2022]</h3>
-        </div>
-        <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
     </div>
 
     <div id="section2" class="section" style="color:white; background-color: rgb(0, 0, 0);">
-      <div>
-        <div id="sunburst-container" class="responsive-svg-container"></div>
-        <h3 style="text-align:center;  color: whitesmoke;">Crimes per Categories and Subcategories [2010-2022]</h3>
+      
+      <div class="flex-container">
+        <div id="sunburst-container" class="responsive-svg-container">
+          <h3 style="text-align:center;  line-height: 0.4; color: whitesmoke;"> Crimes per Type [2010-2022]</h3>
+        </div>
+        <div id="sunburst-chart-tooltip" class="tooltip"></div>
+        <div>
+          <p style="color: lightgray; font-size: 20px; font-weight: bold;"> About Crime Classification...</p>
+          <div class="info-container">
+            In Spain, crimes are classified according to their nature. 
+            <ul>
+              <li><span class="highlight">Against Individuals:</span> Offenses harming individuals' well-being.</li>
+              <li><span class="highlight">Against Patrimony:</span> Crimes involving asset destruction, theft, or damage.</li>
+              <li><span class="highlight">Against Freedom:</span> Violations of personal liberty.</li>
+              <li><span class="highlight">Against Sexuality:</span> Acts against sexual autonomy or consent.</li>
+              <li><span class="highlight">Against Family:</span> Harm to family well-being.</li>
+              <li><span class="highlight">Against Collective Safety:</span> Threats to community security.</li>
+            </ul>
+            <p style="font-size: 12px; "><i>This analysis focuses on the crimes from the categories shown here, which were the most common and/or most relevant for civilian's safety. </i></p>
+          </div>
+
+          <div style="color: grey; font-size: 13px; margin-top: 40px; line-height: 0.5;">
+            <p style="color: lightgrey; font-size: 14px; font-weight: bold;"> 🔆Interactive Chart</p>
+            <p> ➡Select a crime type from the inner circle to take closer look to this class distribution.</p>
+            <p> ➡Click in the hole inside the chart to zoom out to a general view.</p>
+            <p> ➡Put the mouse over the chart to see additional information of each secton.</p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div id="section2.5" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      <h2 style="text-align:center; color: whitesmoke; margin-top: 90;">A matter of luck?</h2>
+      <div style="text-align:center;">
+        <p style="color: lightgrey; font-size: 23px; ">Facing a crime may be a result of being in the wrong place at the wrong time. </p>
+        
+        <div style="color: grey; font-size: 13px; margin-top: 40px; margin-bottom: 50px; line-height: 0.5;">
+          <p style="color: lightgrey; font-size: 14px; font-weight: bold;"> 🔆Bet Time! How lucky are you?</p>
+          <p> ➡ Click on the "Test Your Luck" button to find out! </p>
+          <p> ➡ You can either win the lottery or be victim of a crime. What will it be? <a href="#" onclick="showProbabilities(); return false;">Checkout the probabilities</a>
+        </div>
+
+        <div id="probabilitiesPopup" class="overlay" >
+          <div class="info-container">
+            <h2>Probabilities* of each scenario </h2>
+            <hr style="width: 90%; margin: 0 auto; border: 1px solid #700a0a;">
+            <ul style="text-align: left; font-size: 14px;">
+              <li><b>Probability to win the Spanish Lottery:</b> 0.1694%</li>
+              <li><b>Probability of a Patrimony Crime:</b> 50.5716%</li>
+              <li><b>Probability of a Collective Crime:</b> 9.7623%</li>
+              <li><b>Probability of a Freedom Crime:</b> 15.9359%</li>
+              <li><b>Probability of a Sexual Crime:</b> 0.7765%</li>
+              <li><b>Probability of an Individual Crime:</b> 19.9947%</li>
+              <li><b>Probability of a Family Crime:</b> 2.7896%</li>
+            </ul>
+            <hr style="width: 90%; margin: 0 auto; border: 1px solid #700a0a;">
+
+            <p style="font-size: 12px; "><i>*This results are simulated assuming independency among crime registers based on calculations per capita. Lottery winners are also assumed to be independent from crimes. This results are for entretaining purposes and do not attempt to reflect the past or the future of its players.  </i></p>
+          </div>          
+        </div>
+
+      </div>
+  
+  
+      
+
+      <div  style="width: 100%; align-self: center; align-items: center; border-radius: 10px; line-height: 1.6; color: grey;">
+      <div class="grid-container" style="height: 60%; ">
+        <div id="bar-mini" class="responsive-svg-container"></div>
+        <div style="text-align:center">
+                  <button id="testButton" class="nice-button">Test Your Luck!</button>
+                  <div id="result-container"></div>
+                  <div id="overlay" class="overlay"></div>
+          <img src="./assets/images/tragamonedas.gif" alt="Tragamonedas" style="height: 50%;">
+        </div>
+        <div id="sunburst-container-mini" class="responsive-svg-container"></div>
+      </div>
+      </div>
+      <p style="font-size: 12px; "><i>*This results are simulated assuming independency among crime registers based on calculations per capita. Lottery winners are also assumed to be independent from crimes. This results are for entretaining purposes and do not attempt to reflect the past or the future of its players. </i></p>
+
+      <hr style="width: 70%; margin: 0 auto; border: 1px solid #700a0a;">
+  </div>
     
     <div id="section3" class="section" style="color:white; background-color: rgb(0, 0, 0);">
         <h2 style="text-align:center; color: whitesmoke;">Did you know...?</h3>
@@ -107,25 +196,32 @@
     </div>
 
     <div id="section5" class="section">
-  <h2 style="text-align:center; ">Still unsure where to move in? Personalize your scenario!</h3>
-    <p style="text-align:center;">Filter by category and province to see the fluctuation of crimes there over time</p>
-    <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
-    <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">  
-    <svg width="300" height="400"></svg>
-  <div id="selectors-container">
-      <div class="selector-box" id="category-selector-box" style="display: none">
-          <h3>Crime Categories</h3>
-          <div id="category-selectors"></div>
-      </div>
-      <div class="selector-box" id="province-selector-box">
-          <div class="selector-header">
-              <h3>Provinces</h3>
-              <button class="nice-button" id="select-all-provinces">Select All</button>
-              <button class="nice-button" id="deselect-all-provinces">Deselect All</button>
+      <div id="final-tooltip" class="tooltip" style="position: absolute; visibility: hidden; background-color: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left; font-size: 12px;"></div>
+      <h2 style="text-align:center; ">Still unsure where to move in? Personalize your scenario!</h3>
+        <p style="text-align:center;">Filter by category and province to see the fluctuation of crimes there over time</p>
+        <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+        <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">  
+        <svg width="300" height="400"></svg>
+      <div id="selectors-container">
+          <div class="selector-box" id="category-selector-box" style="display: none">
+              <h3>Crime Categories</h3>
+              <div id="category-selectors"></div>
           </div>
-          <div id="province-selectors"></div>
-      </div> 
-  </div>
+          <div class="selector-box" id="province-selector-box">
+              <div class="selector-header">
+                  <h3>Provinces</h3>
+                  <button class="nice-button" id="select-all-provinces">Select All</button>
+                  <button class="nice-button" id="deselect-all-provinces">Deselect All</button>
+              </div>
+              <div id="province-selectors"></div>
+          </div> 
+      </div>
+
+      <div id="section6" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <h2 style="text-align:center; color: whitesmoke;">Spain as a Country</h3>
+          <p>Section6</p>
+      </div>
+
     </div>
 
     <script src="assets/js/pagination.js"></script>
