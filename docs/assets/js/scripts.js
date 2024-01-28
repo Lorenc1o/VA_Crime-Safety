@@ -1130,7 +1130,6 @@ function createSunburstChartZoomable2(data){
       .text(d => d.data.name);
 
       //Tooltip added
-  
       const sunTooltip = d3.select("body")
       .append("div")
       .style("position", "absolute")
@@ -1319,6 +1318,32 @@ const createBarChart0 = (data, lineValue) => {
     .style("fill", "lightgrey") // Matching the line color or choose as needed
     .text(`Country's Average: ${lineValue}`);
 
+
+
+    //Tooltip added
+    const sunTooltip = d3.select("bar-chart-tooltip")
+    .append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "5px")
+    .style("border-radius", "3px")
+    .style("text-align", "center")
+    .style("font-size", "12px");
+
+    svg.selectAll("path")
+      .on("mouseover", function(event, d) {
+        sunTooltip.html(`Crime Type: ${d.data.name}<br>Percentage: ${calculatePercentage(d.value, root.value)}<br>#Crimes: ${d.value}`)
+          .style("visibility", "visible");
+      })
+      .on("mousemove", function(event) {
+        sunTooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+      })
+      .on("mouseout", function() {
+        sunTooltip.style("visibility", "hidden");
+      });
+
     
 
 
@@ -1383,7 +1408,6 @@ const createBarChart0 = (data, lineValue) => {
 
   };
 
- 
   
   function createPieChart(percentage, containerSelector) {
     const data = [percentage, 100 - percentage];
@@ -1393,7 +1417,7 @@ const createBarChart0 = (data, lineValue) => {
     const radius = Math.min(width, height) / 2;
   
     const color = d3.scaleOrdinal()
-      .range(['#02c40a', '#c4c4c4']);
+      .range(['#02c40a', '#7a7a7a']);
   
     const pie = d3.pie();
     const arc = d3.arc().innerRadius(0).outerRadius(radius);
@@ -1401,48 +1425,7 @@ const createBarChart0 = (data, lineValue) => {
     const svg = d3.select(containerSelector)
       .append('svg')
       .attr('width', width )
-      .attr('height', height + 30)
-      .append('g')
-      .attr('transform', `translate(${width / 2},${height / 2 + margin.top})`);
-  
-    const arcs = svg.selectAll('arc')
-      .data(pie(data))
-      .enter()
-      .append('g')
-      .attr('class', 'arc');
-  
-    arcs.append('path')
-      .attr('d', arc)
-      .attr('fill', (d, i) => color(i));
-  
-    arcs.append('text')
-      .attr('transform', d => `translate(${arc.centroid(d)})`)
-      .attr('text-anchor', 'middle')
-      .attr('font-size', '15px')
-      .attr('fill', 'white')
-      .text(d => `${d.data.toFixed(1)}%`);
-  }
-
-  
-
-  
-  function createPieChart(percentage, containerSelector) {
-    const data = [percentage, 100 - percentage];
-  
-    const width = 200;
-    const height = 200;
-    const radius = Math.min(width, height) / 2;
-  
-    const color = d3.scaleOrdinal()
-      .range(['#02c40a', '#c4c4c4']);
-  
-    const pie = d3.pie();
-    const arc = d3.arc().innerRadius(0).outerRadius(radius);
-  
-    const svg = d3.select(containerSelector)
-      .append('svg')
-      .attr('width', width )
-      .attr('height', height + 30)
+      .attr('height', height + 45)
       .append('g')
       .attr('transform', `translate(${width / 2},${height / 2 + margin.top})`);
   

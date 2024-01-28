@@ -134,6 +134,7 @@ label {
 #province-selectors {
     flex-direction: column;
     column-count: 7;
+    font-size: 10;
 }
 
 .flex-container {
@@ -255,7 +256,6 @@ p {
   #sunburst-container-mini {
     display: flex;
     justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
     height: 100%; /* Set a height, or the div will collapse */
   }
   
