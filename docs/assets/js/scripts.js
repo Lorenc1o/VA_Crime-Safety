@@ -249,6 +249,8 @@ provinces.forEach(province => {
   var label = document.createElement('label');
   label.htmlFor = province;
   label.appendChild(document.createTextNode(generateProvinceText(province, true, true, true, true)));
+  // Font size small
+  label.style.fontSize = "12px";
 
   var container = document.getElementById('province-selectors');
   container.appendChild(checkbox);
@@ -612,14 +614,15 @@ function drawStackedBarChart(data, selectedCategories, selectedProvinces) {
         d3.select(this).append("text")
             .attr("text-anchor", "middle")
             //.attr("transform", "rotate(-90)")
-            .attr("dy", "-0.35em") // Adjust for spacing
+            //.attr("dy", "-0.35em") // Adjust for spacing
+            .attr("dx", xScaleStacked.bandwidth()*0.9)
             .attr("fill", "black")
+            .attr("font-size", "12px")
             .text(d.key);
 
         d3.select(this).append("text")
             .attr("text-anchor", "middle")
-            //.attr("transform", "rotate(-90)")
-            .attr("dy", "0.7em") // Adjust for spacing
+            //.attr("dy", "0.5em") // Adjust for spacing
             .attr("fill", "black")
             .text((d[0][1] - d[0][0]).toFixed(2));
     });
@@ -666,6 +669,7 @@ function updateChart() {
     drawStackedBarChart(data, selectedCategories, selectedProvinces);  
 
     // Update summary in <div id="summary">
+    // First, delete the existing summary
     rates = crimeRatePerProvince = computeCrimeRateLastYearPerProvince(data, selectedCategories, selectedProvinces.map(d => d.value));
     var summary = generateSummary(crimeRatePerProvince, 2);
     document.getElementById("summary").innerHTML = summary;
