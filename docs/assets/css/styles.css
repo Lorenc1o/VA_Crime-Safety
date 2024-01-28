@@ -1,3 +1,132 @@
+body{
+    padding-top: 2%;
+    transition: background-color 0.5s ease;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  a {
+    color: #5fb1e0; /* Light color for contrast against black background */
+    text-decoration: none; /* Removes the default underline */
+}
+
+a:hover {
+    color: #ff7f50; /* Changes color when hovered over */
+    text-decoration: underline; /* Underlines when hovered over */
+}
+
+.tooltip2 {
+  z-index: 1000; /* Make sure it's on top of other elements */
+  position: absolute;
+  visibility: hidden;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 12px;
+  
+}
+
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    pointer-events: none; /* Tooltip should not interfere with other mouse events */
+}
+
+.custheader{
+    text-align:center;
+    background-color: #000;
+    color: white;
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    height: 7%;
+    padding: 0;
+    z-index: 1000;
+    /* text is as h1, bold, no margin */
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.intro{
+  display: flex;
+  flex-direction: row;
+}
+
+.image-container {
+  /*Images in 2 columns*/
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  margin: 0 auto;
+  max-width: 40%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.image-container img { 
+  max-width: 100%;
+  height: auto;
+}
+
+.image-container p {
+  text-align: center;
+}
+  .section {
+    padding-top: 0;
+    margin: 7.5% 0;
+    height: 100vh;
+    max-width: 100%;
+    background-color: #f8f8f8;
+    opacity: 0;
+    transform: scale(1);
+    transition: all 1s ease-in-out;
+    display: grid;
+}
+
+.section.active {
+    display: block; /* Show only the active section */
+    opacity: 1;
+    transform: scale(1);
+}
+
+.section button:hover {
+    background-color: #0056b3;
+}
+
+.navigation-menu {
+  position: fixed;
+  right: 10px; /* Adjust this value as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+.nav-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: grey;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.nav-circle.active {
+  background-color: #7e3a3a; /* Active section indicator */
+}  
+
 .axis path,
 .axis line {
     fill: none;
@@ -20,16 +149,26 @@
     border: 1px solid #ddd;
     background-color: rgb(255, 251, 244);
     padding: 10px;
+    width: 100%;
     margin-right: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.selector-box h3 {
+.selector-header {
+    display: flex;
+    align-items: center; /* Vertically align items in the center */
+    justify-content: space-between; /* Distribute space between and around items */
+    flex-wrap: wrap; /* Allows items to wrap onto the next line if needed */
+}
+
+.selector-header h3 {
     margin-top: 0;
     font-family: Arial, sans-serif;
     color: #333;
     text-align: center;
+    margin-right: 10px; /* Add some space between the title and the buttons */
+    flex-grow: 1;
 }
 
 input[type="checkbox"] {
@@ -37,14 +176,119 @@ input[type="checkbox"] {
 }
 
 label {
-    margin-right: 15px;
-    font-family: Arial, sans-serif;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.selectors-and-legend-container {
+display: flex;
+justify-content: space-between; /* Adjusts the space between the two divs */
+align-items: start; /* Aligns items to the start of the flex container */
+}
+
+#province-selectors {
+flex-grow: 1; /* Allows this div to grow and take up available space */
+margin-right: 20px; /* Adds some space between the selectors and the legend */
+}
+
+.legend-box {
+margin-top: 0;
+padding: 0;
+background-color: #f2f2f2; /* Light grey background */
+border: 1px solid #dcdcdc; /* Light grey border */
+border-radius: 5px;
+width: 15%;
+}
+
+.legend-box h4 {
+margin: 0;
+text-align: center; 
+}
+
+.legend-box p {
+margin: 0;
+font-size: smaller;
+}
+
+.legend-box span {
+font-weight: bold;
+}
+
+/* Hide the default checkbox */
+.emoji-checkbox {
+display: none;
+}
+
+/* Style for span when checkbox is not checked */
+.emoji-checkbox + span {
+font-size: smaller;
+color: black; /* default color */
+/* Add more styles if needed */
+}
+
+/* Style for span when checkbox is checked */
+.emoji-checkbox:checked + span {
+background-color: #ffdd62;
 }
 
 #province-selectors {
     flex-direction: column;
-    column-count: 5;
+    column-count: 6;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-around; /* Adjust as needed */
+  align-items: center; /* Adjust if needed */
+}
+.flex-container > * {
+  margin-right: 30px; /* Adjust the value as needed */
+}
+
+.info-container {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #c9c9c9;
+  color:#000;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Adjust as needed */
+  margin: auto;
+}
+
+
+
+#bar-chart-tooltip {
+  z-index: 1000;
+  position: absolute;
+  visibility: hidden;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #700a0a; /* A deep blue, adjust as needed */
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.highlight-good {
+  font-weight: bold;
+  color: #02c40a; /* A deep blue, adjust as needed */
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+p {
+  margin: 10px 0;
+}
+
 
 .nice-button {
     background-color: #ffdd62;
@@ -64,7 +308,8 @@ label {
     margin-right: auto;
     margin-left: auto;
     width: 100%;
-    max-width: 500px; 
+    height: 100%;
+    max-width: 500px;
     background-color: transparent;
     color: grey;
   }
@@ -72,15 +317,14 @@ label {
   
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: -10px; /* Adjust the gap as needed */
+    grid-template-columns: repeat(3, 1fr);
+    gap: -10px; 
     justify-content: center;
   }
 
 .quadra-grid-container {
     display: grid;
     grid-template-columns: repeat(4, calc(25% - 20px));
-    
     gap: -10px; /* Adjust the gap as needed */
     justify-content: center;
     
@@ -88,9 +332,14 @@ label {
   
 .quadra-grid-container > * {
     margin: 10px; /* Adjust the margin as needed */
-    height: 300px; 
+    height: 100%; 
     max-width: 100%; /* Adjust the max-width as needed */
     overflow: hidden;
+}
+
+.spin-animation {
+  animation: spin 3s linear;
+  transform-origin: center; /* This will rotate around the center of the element */
 }
 
   @keyframes spin {
@@ -106,6 +355,15 @@ label {
   
   .responsive-svg-container {
     transition: transform 0.2s ease-in-out;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+
+  #sunburst-container-mini {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Set a height, or the div will collapse */
   }
   
   .nice-button {
@@ -150,5 +408,17 @@ label {
 
   .footer{
     background: rgba(0, 0, 0, 0.7);
+  }
+
+  #probabilitiesPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border: 1px solid grey;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
   }
   

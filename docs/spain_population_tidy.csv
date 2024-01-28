@@ -38,19 +38,19 @@ Almería,2013,699329
 Almería,2012,704219
 Almería,2011,702819
 Almería,2010,695560
-Araba/Álava,2022,334412
-Araba/Álava,2021,333626
-Araba/Álava,2020,333940
-Araba/Álava,2019,331549
-Araba/Álava,2018,328868
-Araba/Álava,2017,326574
-Araba/Álava,2016,324126
-Araba/Álava,2015,323648
-Araba/Álava,2014,321932
-Araba/Álava,2013,321417
-Araba/Álava,2012,322557
-Araba/Álava,2011,319227
-Araba/Álava,2010,317352
+Araba,2022,334412
+Araba,2021,333626
+Araba,2020,333940
+Araba,2019,331549
+Araba,2018,328868
+Araba,2017,326574
+Araba,2016,324126
+Araba,2015,323648
+Araba,2014,321932
+Araba,2013,321417
+Araba,2012,322557
+Araba,2011,319227
+Araba,2010,317352
 Asturias,2022,1004686
 Asturias,2021,1011792
 Asturias,2020,1018784
@@ -90,19 +90,19 @@ Badajoz,2013,693729
 Badajoz,2012,694533
 Badajoz,2011,693921
 Badajoz,2010,692137
-Balears (Illes),2022,1176659
-Balears (Illes),2021,1173008
-Balears (Illes),2020,1171543
-Balears (Illes),2019,1149460
-Balears (Illes),2018,1128908
-Balears (Illes),2017,1115999
-Balears (Illes),2016,1107220
-Balears (Illes),2015,1104479
-Balears (Illes),2014,1103442
-Balears (Illes),2013,1111674
-Balears (Illes),2012,1119439
-Balears (Illes),2011,1113114
-Balears (Illes),2010,1106049
+Balears,2022,1176659
+Balears,2021,1173008
+Balears,2020,1171543
+Balears,2019,1149460
+Balears,2018,1128908
+Balears,2017,1115999
+Balears,2016,1107220
+Balears,2015,1104479
+Balears,2014,1103442
+Balears,2013,1111674
+Balears,2012,1119439
+Balears,2011,1113114
+Balears,2010,1106049
 Barcelona,2022,5727615
 Barcelona,2021,5714730
 Barcelona,2020,5743402
@@ -116,19 +116,19 @@ Barcelona,2013,5540925
 Barcelona,2012,5552050
 Barcelona,2011,5529099
 Barcelona,2010,5511147
-Vizcaya,2022,1149344
-Vizcaya,2021,1154334
-Vizcaya,2020,1159443
-Vizcaya,2019,1152651
-Vizcaya,2018,1149628
-Vizcaya,2017,1148302
-Vizcaya,2016,1147576
-Vizcaya,2015,1148775
-Vizcaya,2014,1151905
-Vizcaya,2013,1156447
-Vizcaya,2012,1158439
-Vizcaya,2011,1155772
-Vizcaya,2010,1153724
+Bizkaia,2022,1149344
+Bizkaia,2021,1154334
+Bizkaia,2020,1159443
+Bizkaia,2019,1152651
+Bizkaia,2018,1149628
+Bizkaia,2017,1148302
+Bizkaia,2016,1147576
+Bizkaia,2015,1148775
+Bizkaia,2014,1151905
+Bizkaia,2013,1156447
+Bizkaia,2012,1158439
+Bizkaia,2011,1155772
+Bizkaia,2010,1153724
 Burgos,2022,355045
 Burgos,2021,356055
 Burgos,2020,357650
@@ -181,19 +181,19 @@ Cantabria,2013,591888
 Cantabria,2012,593861
 Cantabria,2011,593121
 Cantabria,2010,592250
-Castellón/Castelló,2022,590616
-Castellón/Castelló,2021,587064
-Castellón/Castelló,2020,585590
-Castellón/Castelló,2019,579962
-Castellón/Castelló,2018,576898
-Castellón/Castelló,2017,575470
-Castellón/Castelló,2016,579245
-Castellón/Castelló,2015,582327
-Castellón/Castelló,2014,587508
-Castellón/Castelló,2013,601699
-Castellón/Castelló,2012,604564
-Castellón/Castelló,2011,604344
-Castellón/Castelló,2010,604274
+Castellón,2022,590616
+Castellón,2021,587064
+Castellón,2020,585590
+Castellón,2019,579962
+Castellón,2018,576898
+Castellón,2017,575470
+Castellón,2016,579245
+Castellón,2015,582327
+Castellón,2014,587508
+Castellón,2013,601699
+Castellón,2012,604564
+Castellón,2011,604344
+Castellón,2010,604274
 Ciudad Real,2022,490806
 Ciudad Real,2021,492591
 Ciudad Real,2020,495045
@@ -220,19 +220,19 @@ Córdoba,2013,802422
 Córdoba,2012,804498
 Córdoba,2011,805857
 Córdoba,2010,805108
-La Coruña,2022,1119180
-La Coruña,2021,1120134
-La Coruña,2020,1121815
-La Coruña,2019,1119596
-La Coruña,2018,1119351
-La Coruña,2017,1120294
-La Coruña,2016,1122799
-La Coruña,2015,1127196
-La Coruña,2014,1132735
-La Coruña,2013,1138161
-La Coruña,2012,1143911
-La Coruña,2011,1147124
-La Coruña,2010,1146458
+Coruña (A),2022,1119180
+Coruña (A),2021,1120134
+Coruña (A),2020,1121815
+Coruña (A),2019,1119596
+Coruña (A),2018,1119351
+Coruña (A),2017,1120294
+Coruña (A),2016,1122799
+Coruña (A),2015,1127196
+Coruña (A),2014,1132735
+Coruña (A),2013,1138161
+Coruña (A),2012,1143911
+Coruña (A),2011,1147124
+Coruña (A),2010,1146458
 Cuenca,2022,195215
 Cuenca,2021,195516
 Cuenca,2020,196139
@@ -506,19 +506,19 @@ Salamanca,2013,345548
 Salamanca,2012,350564
 Salamanca,2011,352986
 Salamanca,2010,353619
-Santa Cruz de Tenerife,2022,1048306
-Santa Cruz de Tenerife,2021,1044405
-Santa Cruz de Tenerife,2020,1044887
-Santa Cruz de Tenerife,2019,1032983
-Santa Cruz de Tenerife,2018,1018510
-Santa Cruz de Tenerife,2017,1007641
-Santa Cruz de Tenerife,2016,1004124
-Santa Cruz de Tenerife,2015,1001900
-Santa Cruz de Tenerife,2014,1004788
-Santa Cruz de Tenerife,2013,1014829
-Santa Cruz de Tenerife,2012,1017531
-Santa Cruz de Tenerife,2011,1029789
-Santa Cruz de Tenerife,2010,1027914
+Tenerife,2022,1048306
+Tenerife,2021,1044405
+Tenerife,2020,1044887
+Tenerife,2019,1032983
+Tenerife,2018,1018510
+Tenerife,2017,1007641
+Tenerife,2016,1004124
+Tenerife,2015,1001900
+Tenerife,2014,1004788
+Tenerife,2013,1014829
+Tenerife,2012,1017531
+Tenerife,2011,1029789
+Tenerife,2010,1027914
 Segovia,2022,153803
 Segovia,2021,153663
 Segovia,2020,153478

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visual Analytics: D3 Assignment</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</html>
+<body>
+  <div class="custheader">
+		Crime and Safety: Moving to Spain?
+    <hr style="width: 78%; margin: 0 auto; border: 1.5px solid #700a0a;">
+  </div>
+
+    <div class="navigation-menu">
+        <div class="nav-circle" data-target="section0"></div>
+        <div class="nav-circle" data-target="section1"></div>
+        <div class="nav-circle" data-target="section2"></div>
+        <div class="nav-circle" data-target="section2.5"></div>
+        <div class="nav-circle" data-target="section3"></div>
+        <div class="nav-circle" data-target="section4"></div>
+        <div class="nav-circle" data-target="section4.5"></div>
+        <div class="nav-circle" data-target="section5"></div>
+        <div class="nav-circle" data-target="section6"></div>
+    </div>
+
+    <div id="section0" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      
+        <h2 style="text-align:center; color: whitesmoke;">Spain as a Country</h3>
+
+        <div class="intro">
+
+          <div class="image-container">
+
+            <div style="margin-bottom: 20px; width: 100%;">
+                <img src="./assets/images/sagrada_familia.jpg" alt="Sagrada Familia" style="width: 100%; height: auto;">
+                <p style="text-align: center;"><i>Sagrada Familia, Barcelona</i></p>
+            </div>
+
+            <div style="margin-bottom: 20px; width: 100%;">
+                <img src="./assets/images/alhambra.jpg" alt="La Alhambra" style="max-width: 100%; height: auto;">
+                <p style="text-align: center;"><i>La Alhambra, Granada</i></p>
+            </div>
+
+            <div style="margin-bottom: 20px; width: 100%;">
+                <img src="./assets/images/cehegin.jpg" alt="Cehegín" style="max-width: 100%; height: auto;">
+                <p style="text-align: center;"><i>Cehegín old town, Murcia</i></p>
+            </div>
+
+            <div style="margin-bottom: 20px; width: 100%;">
+                <img src="./assets/images/PlayaTorimbia.jpg" alt="Playa de Torimbia" style="max-width: 100%; height: auto;">
+                <p style="text-align: center;"><i>Playa de Torimbia, Asturias</i></p>
+            </div>
+
+        </div>
+
+          <div class="info-container" style="text-align: center; font-size: 16px; line-height: 1.5; margin-top: 50px; margin-bottom: 50px; ">
+            <p>Moving to a new country is a big decision, specially when we are looking to a place to work for a medium-long term. 
+              <br> 
+              <br> 
+              <span class="highlight">Safety</span> is one of the most important factors to consider when choosing a new place to live, but can be sometimes disregarded.
+              <br> 
+              <br> 
+              In this analysis, we will explore the crime rates in <span class="highlight">Spain</span>, and how they have evolved over the years. We aim to provide a better understanding of the country's safety, so that you can make an informed decision when choosing your new home.
+              <br> 
+              <br> 
+              Spain is a country with a rich culture and history, and a great place to live in terms of living standards and quality of life. Spanish people are really open and friendly, and the country has a lot to offer in terms of food, culture, and entertainment.
+              <br> 
+              <br>  
+              <span class="highlight">Are you ready?</span> Let's get started!
+          </div>
+        </div>
+    </div>
+
+    <div id="section1" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <div class="flex-container">
+          <div id="bar" class="responsive-svg-container">
+            <h3 style="text-align:center; color: whitesmoke;">Provinces with Highest Crime per Capita [2010-2022]</h3>
+          </div>
+          <div id="bar-chart-tooltip" class="tooltip" style="position: absolute; visibility: hidden; background-color: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left; font-size: 12px;"></div>
+          <div>
+            <p style="color: lightgray; font-size: 20px; font-weight: bold;"> About the provinces...</p>
+            <div class="info-container">
+              <p><span class="highlight">Balears</span> is known for its four largest islands: Mallorca, Menorca, Ibiza, and Formentera.</p>
+              <p><span class="highlight">Barcelona</span> and <span class="highlight">Madrid</span> are the most populated provinces in Spain.</p>
+              <p><span class="highlight">Girona</span> and <span class="highlight">Tarragona</span> are neighboring provinces of Barcelona, mostly known by tourists for their Roman ruins.</p>
+              <p><span class="highlight">Ceuta</span> and <span class="highlight">Melilla</span> are the only Spanish cities in Africa, being autonomous territories.</p>
+              <p><span class="highlight">Málaga</span> is the only province in Andalucia in this list.</p>
+              <p><span class="highlight">Alicante</span> and <span class="highlight">Valencia</span> are known for their beaches and Mediterranean climate.</p>
+            </div>
+          </div>
+          
+        </div>
+
+    </div>
+
+    <div id="section2" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      
+      <div class="flex-container">
+        <div id="sunburst-container" class="responsive-svg-container">
+          <h3 style="text-align:center;  line-height: 0.4; color: whitesmoke;"> Crimes per Type [2010-2022]</h3>
+        </div>
+        <div id="sunburst-chart-tooltip" class="tooltip2"></div>
+        <div>
+          <p style="color: lightgray; font-size: 20px; font-weight: bold;"> About Crime Classification...</p>
+          <div class="info-container">
+            In Spain, crimes are classified according to their nature. 
+            <ul>
+              <li><span class="highlight">Against Individuals:</span> Offenses harming individuals' well-being.</li>
+              <li><span class="highlight">Against Patrimony:</span> Crimes involving asset destruction, theft, or damage.</li>
+              <li><span class="highlight">Against Freedom:</span> Violations of personal liberty.</li>
+              <li><span class="highlight">Against Sexuality:</span> Acts against sexual autonomy or consent.</li>
+              <li><span class="highlight">Against Family:</span> Harm to family well-being.</li>
+              <li><span class="highlight">Against Collective Safety:</span> Threats to community security.</li>
+            </ul>
+            <p style="font-size: 12px; "><i>This analysis focuses on the crimes from the categories shown here, which were the most common and/or most relevant for civilian's safety. </i></p>
+          </div>
+
+          <div style="color: grey; font-size: 13px; margin-top: 40px; line-height: 0.5;">
+            <p style="color: lightgrey; font-size: 14px; font-weight: bold;"> 🔆Interactive Chart</p>
+            <p> ➡Select a crime type from the inner circle to take closer look to this class distribution.</p>
+            <p> ➡Click in the hole inside the chart to zoom out to a general view.</p>
+            <p> ➡Put the mouse over the chart to see additional information of each secton.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="section2.5" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+      <h2 style="text-align:center; color: whitesmoke; margin-top: 90;">A matter of luck?</h2>
+      <div style="text-align:center;">
+        <p style="color: lightgrey; font-size: 23px; ">Facing a crime may be a result of being in the wrong place at the wrong time. </p>
+        
+        <div style="color: grey; font-size: 13px; margin-top: 40px; margin-bottom: 50px; line-height: 0.5;">
+          <p style="color: lightgrey; font-size: 14px; font-weight: bold;"> 🔆Bet Time! How lucky are you?</p>
+          <p> ➡ Click on the "Test Your Luck" button to find out! </p>
+          <p> ➡ You can either win the lottery or be victim of a crime. What will it be? <a href="#" onclick="showProbabilities(); return false;">Checkout the probabilities</a>
+        </div>
+
+        <div id="probabilitiesPopup" class="overlay" >
+          <div class="info-container">
+            <h2>Probabilities* of each scenario </h2>
+            <hr style="width: 90%; margin: 0 auto; border: 1px solid #700a0a;">
+            <ul style="text-align: left; font-size: 14px;">
+              <li><b>Probability to win the Spanish Lottery:</b> 0.1694%</li>
+              <li><b>Probability of a Patrimony Crime:</b> 50.5716%</li>
+              <li><b>Probability of a Collective Crime:</b> 9.7623%</li>
+              <li><b>Probability of a Freedom Crime:</b> 15.9359%</li>
+              <li><b>Probability of a Sexual Crime:</b> 0.7765%</li>
+              <li><b>Probability of an Individual Crime:</b> 19.9947%</li>
+              <li><b>Probability of a Family Crime:</b> 2.7896%</li>
+            </ul>
+            <hr style="width: 90%; margin: 0 auto; border: 1px solid #700a0a;">
+
+            <p style="font-size: 12px; "><i>*This results are simulated assuming independency among crime registers based on calculations per capita. Lottery winners are also assumed to be independent from crimes. This results are for entretaining purposes and do not attempt to reflect the past or the future of its players.  </i></p>
+          </div>          
+        </div>
+
+      </div>
+      <div  style="width: 100%; align-self: center; align-items: center; border-radius: 10px; line-height: 1.6; color: grey;">
+      <div class="grid-container" style="height: 60%; ">
+        <div id="bar-mini" class="responsive-svg-container"></div>
+        <div style="text-align:center">
+                  <button id="testButton" class="nice-button">Test Your Luck!</button>
+                  <div id="result-container"></div>
+                  <div id="overlay" class="overlay"></div>
+          <img src="./assets/images/tragamonedas.gif" alt="Tragamonedas" style="height: 50%;">
+        </div>
+        <div id="sunburst-container-mini" class="responsive-svg-container" style="margin-top: -10%;"></div>
+      </div>
+      </div>
+  </div>
+    
+    <div id="section3" class="section" style="color:white; background-color: rgb(0, 0, 0);">
+        <h2 style="text-align:center; color: whitesmoke;">Did you know...?</h3>
+            <div  class="quadra-grid-container" style="text-align:center" > 
+            
+              <div style="background-color: grey;">
+                <p>In 2022, </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 5% 0;">Madrid </p>
+                <p> was the province with most registered homicides with 183 cases</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2022, a daily average of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 5% 0;">14K</p>
+                <p> crimes where registered in the country.</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2023, the city of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 5% 0;">Bilbao</p>
+                <p>has the lowest Safety Index from Spain [<a href="https://www.numbeo.com/crime/region_rankings_current.jsp?region=150" target="_blank" style="font-size: 4;">*</a>]</p>
+              </div>
+        
+              <div style="background-color: grey;">
+                <p>In 2022, a daily average of </p>
+                <p style="font-size: 84px; font-weight: bold; color: #700a0a;  margin: 5% 0;">4</p>
+                <p> homicides where registered in the country.</p>
+              </div>
+            </div>
+        
+            <hr style="width: 70%; margin: 5% auto; border: 1px solid #700a0a;">
+    </div>
+
+    <div id="section4" class="section">
+      <h2 style="text-align:center; ">Don't worry! It's not as bad as it looks...</h2>
+    
+      <hr style="width: 80%; margin: 0 auto; border: 5px solid grey;">
+      <hr style="width: 78%; margin: 0 auto; border: 2px solid black;">
+      
+      <div  class="quadra-grid-container" style="text-align:center" > 
+        <div style="background-color: whitesmoke;">
+          <p>In 2022, </p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 5% 0;">90%</p>
+          <p> of people ended the year without facing any crime </p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <div class="pie-chart-container" style="margin-top: -10%;"></div>
+          <p style="padding-top: 5%;">80.4% of spanish people feel safe walking alone at night [<a href="https://www.oecdbetterlifeindex.org/es/topics/safety-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <p>Homicide rate in Spain is </p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 5% 0;">3.7 times</p>
+          <p>lower than in other OECD countries [<a href="https://www.oecdbetterlifeindex.org/es/countries/spain-es/" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+        <div style="background-color: whitesmoke;">
+          <p>Spain is inside the</p>
+          <p style="font-size: 84px; font-weight: bold; color: #02c40a;  margin: 5% 0;">19%</p>
+          <p>safest countries in the world [<a href="https://worldpopulationreview.com/country-rankings/most-peaceful-countries" target="_blank" style="font-size: 4;">*</a>]</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="section4.5" class="section" >
+      <div class="flex-container"  style="margin-left: 80px; margin-right: 30px;">
+        <div id="barBest" class="responsive-svg-container">
+          <h3 style="text-align:center; color: black;">Top 10 Provinces with Lowest Crime per Capita [2010-2022]</h3>
+        </div>
+        <div>
+          <p style="color: #616161; font-size: 20px; font-weight: bold;"> The lower, the better!</p>
+          <div class="info-container">
+            <p> 
+              <p><span class="highlight-good">Teruel</span> is the province with less crimes per capita registered! It has less than 150K inhabitants,</p>
+              <p><span class="highlight-good">Asturias</span> has the highest population from this top 10 with around 1M inhabitants. The remining provinces have less than 624K people each.</p>
+              <p>In <span class="highlight-good">2022</span>, the sum of all crimes registered in these 10 provinces is 240 (average per capita of 0.0009). As comparison, only in that year Madrid had more than 350K crimes (average per capita of 0.0023) </p>
+              
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div id="section5" class="section">
+      <div id="final-tooltip" class="tooltip" style="position: absolute; visibility: hidden; background-color: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left; font-size: 12px;"></div>
+      <h2 style="text-align:center; ">Still unsure where to move in? Personalize your scenario!</h3>
+         <p style="color: #424242; line-height: 30%; font-size: 14px; font-weight: bold; text-align:center;"> 🔆Interactive Chart</p>
+        <p style="color: grey; line-height: 30%; font-size: 10; text-align:center;"> ➡Select a crime type on the left list and province at the bottom box.</p>
+        <hr style="width: 80%; margin: 0 auto; border: 2px solid grey;">
+        <hr style="width: 78%; margin: 0 auto; border: 1px solid black;">  
+        <svg width="300" height="400"></svg>
+      <div id="selectors-container">
+          <div class="selector-box" id="category-selector-box" style="display: none">
+              <h3>Crime Categories</h3>
+              <div id="category-selectors"></div>
+          </div>
+          <div class="selector-box" id="province-selector-box">
+            <div class="selector-header">
+              <button class="nice-button" id="select-all-provinces">Select All</button>
+              <button class="nice-button" id="deselect-all-provinces">Deselect All</button>
+                <h3>Provinces</h3>
+            </div>
+        
+            <div class="selectors-and-legend-container">
+                <div id="province-selectors"></div>
+                <div class="legend-box">
+                  <h4>Legend</h4>
+                  <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-population" checked> <span>🏙️- More than 1 million inhabitants</span> </label></p>
+                  <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-universities" checked> <span>📚- More than 3 universities</span></label></p>
+                  <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-gdp" checked> <span>💰- GDP per capita higher than 30K €</span></label></p>
+                  <p><label><input type="checkbox" class="emoji-checkbox" id="emoji-police" checked> <span>👮- More than 400 police officers per 1000 inhabitants</span></label></p>
+              </div>          
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div id="section6" class="section" style="color:white; background-color: rgb(255, 255, 255);">
+      <h2 style="text-align:center;">Summary of your selection</h3>
+        <div class="info-container">
+          <div id="summary"></div>
+        </div>
+        <div style="color: black; font-size: 13px; margin-top: 40px; line-height: 0.5; margin-left: 35%;">
+          <p>
+            We hope to have given you a clear view of the crime and safety situation in Spain.
+          </p>
+          <p>
+            If you are interested in delving deeper into the data, you can check our sources:
+          </p>
+          <p> ➡ Spanish crime data: <a href="https://estadisticasdecriminalidad.ses.mir.es/sec/jaxiPx/Tabla.htm?path=/Datos1//l0/&file=01002.px&type=pcaxis&L=0" target="_blank">Spanish National Institute of Statistics</a></p>
+          <p> ➡ Spanish population data: <a href="https://www.ine.es/jaxi/Tabla.htm?path=/t20/e245/p08/l0/&file=03003.px&L=0" target="_blank">Spanish National Institute of Statistics</a></p>
+          <p> ➡ Spanish GDP data: <a href="https://www.ine.es/prensa/cre_2022.pdf" target="_blank">Spanish National Institute of Statistics</a></p>
+          <p> ➡ Spanish police data: <a href="https://www.newtral.es/numero-policias-espana-total-policia-nacional-guardia-civil/20211220/" target="_blank">Newtral</a></p>
+          <p> ➡ Spanish universities data: <a href="https://www.universidades.gob.es/wp-content/uploads/2022/11/Datos_y_Cifras_2021_22.pdf" target="_blank">Spanish Ministry of Education</a></p>
+        </div>
+    </div>
+
+    <script src="assets/js/pagination.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+</body>
+
+
