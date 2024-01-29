@@ -456,7 +456,7 @@ function generateSummary(crimeRatePerProvince, n=2) {
     summary += provinceInfo[provinces[provinces.length - 1].province].gdppc;
     summary += "€ and there are ";
     summary += provinceInfo[provinces[provinces.length - 1].province].police;
-    summary += " police officers per 1000 inhabitants, that will do their best to protect you!</p>";
+    summary += " police officers per 100K inhabitants, that will do their best to protect you!</p>";
 
     return summary;
 }
